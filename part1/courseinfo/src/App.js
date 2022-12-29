@@ -1,8 +1,10 @@
 const Header = (header) => {
+  console.log(header)
   return <h1>{header.course}</h1>;
 };
 
 const Part = (content) => {
+  console.log(content)
   return (
     <p>
       {content.part} {content.exercise}
