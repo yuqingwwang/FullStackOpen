@@ -19,3 +19,7 @@ Create a diagram depicting the situation where the user goes to the single page 
 ## 0.6 New note in Single page app diagram
 
 Create a diagram depicting the situation where the user creates a new note using the single page version of the app.
+
+### Solution
+
+![ex 0.6](ex0.6.png)
