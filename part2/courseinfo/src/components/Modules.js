@@ -5,7 +5,7 @@ const Header = ({ name }) => {
       {name}
     </h1>
   </>)
-}
+};
 
 // Content
 const Part = ({ part, exercises }) => (

@@ -1,12 +1,8 @@
-// import Header from './Header'
-// import Content from './Content'
-// import Total from './Total'
 import {Header, Content, Total} from './Modules'
 
 const Courses = ({ courses }) =>
   courses.map(function (course, i) {
     // using array method reduce
-
     /*const sumWithInitial =
     array1.reduce((accumulator, currentValue) =>
     accumulator + currentValue, initialValue);*/

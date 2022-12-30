@@ -23,8 +23,8 @@ const courses = [
     ]
   },
   {
-    name: 'Node.js',
     id: 2,
+    name: 'Node.js',
     parts: [
       {
         name: 'Routing',
@@ -38,16 +38,14 @@ const courses = [
       }
     ]
   }
-]
-
+];
 
 const App = () => {
-
   return (
     <>
     {Courses({courses})}
     </>
   );
-}
+};
 
-export default App
+export default App;
