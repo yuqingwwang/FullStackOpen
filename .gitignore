@@ -1,10 +1,5 @@
-# Ignore everything
-/*
-
-# But not these files...
-!part1/src/
-!part2/src/
-!part0/README.md
-!part1/README.md
-!part2/README.md
-!.gitignore
+.DS_Store
+**/node_modules
+**/public
+package.json
+package-lock.json
