@@ -12,6 +12,8 @@ const Part = ({ part, exercises }) => (
   </p>
 );
 
+// The application works regardless of
+// the number of parts a course has
 const Content = ({ parts }) =>
   parts.map((part, i) => (
     <Part key={i} part={part.name} exercises={part.exercises} />
@@ -41,14 +43,19 @@ const App = () => {
     ]
   }
 
-  console.log(course.name)
+  // calculate the sum of exercises with the array method reduce
+  // const sumWithInitial = array1.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue,
+  //   initialValue
+  // );
 
-  // const total = course.parts.reduce((total, part) => total + part.exercises, 0);
+  const total = course.parts.reduce((total, part) => total + part.exercises, 0);
+
   return (
     <>
       <Header name={course.name} />
       <Content parts={course.parts} />
-      {/* <Total exercises={total} /> */}
+      <Total exercises={total} />
     </>
   );
 }
