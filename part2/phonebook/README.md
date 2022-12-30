@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## About
 
-A simple phonebook
-- adding names
-- adding phone numbers
-- a search field to filter the list of people by name:
+A simple phonebook that allows the user to
+- add names
+- add phone numbers
+- filter the list of people by name
