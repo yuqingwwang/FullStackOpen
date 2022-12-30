@@ -1,4 +1,6 @@
-.DS_Store
-/.DS_Store
+# Ignore everything
+*
 
-node_modules/
+# But not these files...
+!*/src/
+*/README.md
