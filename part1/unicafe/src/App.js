@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 
 const Header = ({good, neutral, bad, setGood, setNeutral, setBad}) => {
-
   console.log({good, neutral, bad})
 
   return (<header>
