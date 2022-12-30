@@ -10,12 +10,15 @@ const Header = (header) => {
   </header>)
 }
 
-const Stats = (stats) => {
-  return(<body><h2>statistics</h2>
-  <p>good 6</p>
-  <p>neutral 2</p>
-  <p>bad 1</p>
-  </body>)
+const Stats = ({good, neutral, bad}) => {
+  return(<><h2>statistics</h2>
+  <table>
+    <tbody>
+      <tr>good {good}</tr>
+      <tr>neutral {neutral}</tr>
+      <tr>bad {bad}</tr>
+    </tbody>
+  </table></>)
 }
 const App = () => {
   // save clicks of each button to its own state
@@ -26,7 +29,7 @@ const App = () => {
   return (
     <div>
       <Header title/>
-      <Stats stats/>
+      <Stats good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
