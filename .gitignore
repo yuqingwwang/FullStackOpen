@@ -2,6 +2,9 @@
 /*
 
 # But not these files...
-!*/src/
-!*/README.md
+!part1/src/
+!part2/src/
+!part0/README.md
+!part1/README.md
+!part2/README.md
 !.gitignore
