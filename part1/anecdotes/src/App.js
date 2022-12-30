@@ -16,26 +16,41 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  // dictionary with 6 keys, values of 0
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
 
   const addVote = () => {
+    // modify the values of the copy
     const pointsCopy = [...points];
     pointsCopy[selected] += 1;
     setPoints(pointsCopy);
   };
+
+  const randomChoice = () => {
+    const choice = Math.floor(Math.random() * anecdotes.length);
+    setSelected(choice)
+  }
+
+  const bestAnecdoteIndex = points.indexOf(Math.max(...points));
 
   return (
     <div>
       <h1>Anecdote of the day</h1>
       <div>{anecdotes[selected]}</div>
       <div>has {points[selected]} points</div>
-      <Button handleClick={() => addVote()} text="vote" />
+      <br></br>
+      <div>
       <Button
-        handleClick={() =>
-          setSelected(Math.floor(Math.random() * anecdotes.length))
-        }
+        handleClick={() => addVote()}
+        text="vote" />
+      <Button
+        handleClick={() =>randomChoice()}
         text="next anecdote"
-      />
-    </div>);}
+      /></div>
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[bestAnecdoteIndex]}</div>
+      <div>has {points[bestAnecdoteIndex]} votes</div>
+    </div>)
+    }
 
 export default App
