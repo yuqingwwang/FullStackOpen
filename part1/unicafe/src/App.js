@@ -14,6 +14,14 @@ const Header = ({good, neutral, bad, setGood, setNeutral, setBad}) => {
 }
 
 const Stats = ({good, neutral, bad}) => {
+  if ((good+neutral+bad) === 0) {
+    return (
+      <>
+        <h2>statistics</h2>
+        <p>No feedback given</p>
+      </>
+    );
+  }
   const avr = (good*scoreDict['good'] + neutral*scoreDict['neutral'] + bad*scoreDict['bad'])/3
   const positivePercent = good/(good+neutral+bad)
   return(<><h2>statistics</h2>
