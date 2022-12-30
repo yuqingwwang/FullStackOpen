@@ -3,4 +3,5 @@
 
 # But not these files...
 !*/src/
-*/README.md
+!*/README.md
+!.gitignore
