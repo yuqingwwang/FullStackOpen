@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+const scoreDict = {'good': 1, 'neutral': 0, 'bad': -1}
 
 const Header = ({good, neutral, bad, setGood, setNeutral, setBad}) => {
   console.log({good, neutral, bad})
@@ -13,12 +14,16 @@ const Header = ({good, neutral, bad, setGood, setNeutral, setBad}) => {
 }
 
 const Stats = ({good, neutral, bad}) => {
+  const avr = (good*scoreDict['good'] + neutral*scoreDict['neutral'] + bad*scoreDict['bad'])/3
+  const positivePercent = good/(good+neutral+bad)
   return(<><h2>statistics</h2>
   <table>
     <tbody>
       <tr><td>good {good}</td></tr>
       <tr><td>neutral {neutral}</td></tr>
       <tr><td>bad {bad}</td></tr>
+      <tr><td>average {avr}</td></tr>
+      <tr><td>positive {positivePercent}</td></tr>
     </tbody>
   </table></>)
 }
