@@ -6,7 +6,7 @@ const Persons = ({ name }) => {
   )
 }
 
-const App = ( props) => {
+const App = ( props ) => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ])
@@ -14,14 +14,20 @@ const App = ( props) => {
   // const [showAll, setShowAll] = useState(true)
 
 
-  const addNote = (event) => {
+  const addPerson = (event) => {
     event.preventDefault()
     const noteObject = {
       name: newPerson
     }
 
-    setPersons(persons.concat(noteObject))
-    setNewPerson('')
+    const alreadyExists = persons.some((person) => person.name === newPerson);
+
+    if(alreadyExists) {
+      alert(`${newPerson} is already added to phonebook`)}
+    else {
+      setPersons(persons.concat(noteObject))
+      setNewPerson('')
+    }
   }
 
   const handleNameChange = (event) => {
@@ -46,7 +52,7 @@ const App = ( props) => {
           <Persons key={person.id} note={person} />
         )}
       </ul> */}
-      <form onSubmit={addNote}>
+      <form onSubmit={addPerson}>
         <input
             value={newPerson}
             onChange={handleNameChange}
@@ -61,6 +67,6 @@ const App = ( props) => {
       </ul>
     </div>
   )
-}
+  }
 
 export default App
