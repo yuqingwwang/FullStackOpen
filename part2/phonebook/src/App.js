@@ -1,34 +1,64 @@
 import { useState } from 'react'
 
-const App = () => {
+const Persons = ({ name }) => {
+  return (
+    <li>{name.name}</li>
+  )
+}
+
+const App = ( props) => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ])
-  const [newName, setNewName] = useState('')
+  const [newPerson, setNewPerson] = useState('')
+  // const [showAll, setShowAll] = useState(true)
+
+
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      name: newPerson
+    }
+
+    setPersons(persons.concat(noteObject))
+    setNewPerson('')
+  }
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
-    setNewName(event.target.value)
+    setNewPerson(event.target.value)
   }
 
-  const addName = (event) => {
-    event.preventDefault()
-    const nameObject = {
-      content: newName,
-    }
+  // const personsToShow = showAll
+  //   ? persons
+  //   : persons.filter(note => note.important === true)
 
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-  }
-  return (
+  return(
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <input value={newName} onChange={handleNameChange} />
-          <button type="submit">add</button>
+      {/* <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all' }
+        </button>
+      </div> */}
+      {/* <ul>
+        {personsToShow.map(person =>
+          <Persons key={person.id} note={person} />
+        )}
+      </ul> */}
+      <form onSubmit={addNote}>
+        <input
+            value={newPerson}
+            onChange={handleNameChange}
+          />
+        <button type="submit">save</button>
       </form>
       <h2>Numbers</h2>
-      ...
+      <ul>
+        {persons.map(person =>
+          <Persons name={person} />
+        )}
+      </ul>
     </div>
   )
 }
