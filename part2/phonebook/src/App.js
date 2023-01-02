@@ -2,13 +2,13 @@ import { useState } from 'react'
 
 const Persons = ({ name }) => {
   return (
-    <li>{name.name}</li>
+    <li key='name.id'>{name.name}</li>
   )
 }
 
 const App = ( props ) => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', id: 1}
   ])
   const [newPerson, setNewPerson] = useState('')
   // const [showAll, setShowAll] = useState(true)
@@ -17,13 +17,14 @@ const App = ( props ) => {
   const addPerson = (event) => {
     event.preventDefault()
     const noteObject = {
-      name: newPerson
+      name: newPerson,
+      id: persons.length + 1
     }
 
     const alreadyExists = persons.some((person) => person.name === newPerson);
 
     if(alreadyExists) {
-      alert(`${newPerson} is already added to phonebook`)}
+      alert(newPerson + ' is already added to phonebook')}
     else {
       setPersons(persons.concat(noteObject))
       setNewPerson('')
@@ -62,7 +63,7 @@ const App = ( props ) => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person =>
-          <Persons name={person} />
+          <Persons key={person.id} name={person} />
         )}
       </ul>
     </div>
