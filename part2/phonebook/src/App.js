@@ -2,15 +2,16 @@ import { useState } from 'react'
 
 const Persons = ({ name }) => {
   return (
-    <li key='name.id'>{name.name}</li>
+    <li key='name.id'>{name.name} {name.number}</li>
   )
 }
 
 const App = ( props ) => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', id: 1}
+    { name: 'Arto Hellas', id: 1, number: 10110}
   ])
   const [newPerson, setNewPerson] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   // const [showAll, setShowAll] = useState(true)
 
 
@@ -18,7 +19,8 @@ const App = ( props ) => {
     event.preventDefault()
     const noteObject = {
       name: newPerson,
-      id: persons.length + 1
+      id: persons.length + 1,
+      number: newNumber
     }
 
     const alreadyExists = persons.some((person) => person.name === newPerson);
@@ -34,6 +36,11 @@ const App = ( props ) => {
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewPerson(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
   }
 
   // const personsToShow = showAll
@@ -54,16 +61,20 @@ const App = ( props ) => {
         )}
       </ul> */}
       <form onSubmit={addPerson}>
-        <input
+        <div>Name: <input
             value={newPerson}
             onChange={handleNameChange}
-          />
+          /></div>
+        <div>Number: <input
+            value={newNumber}
+            onChange={handleNumberChange}
+          /></div>
         <button type="submit">save</button>
       </form>
       <h2>Numbers</h2>
       <ul>
         {persons.map(person =>
-          <Persons key={person.id} name={person} />
+          <Persons key={person.id} name={person}/>
         )}
       </ul>
     </div>
