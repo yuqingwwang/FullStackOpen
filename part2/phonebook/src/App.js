@@ -8,12 +8,13 @@ const Persons = ({ name }) => {
 
 const App = ( props ) => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', id: 1, number: 10110}
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
   const [newPerson, setNewPerson] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  // const [showAll, setShowAll] = useState(true)
-
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -43,23 +44,9 @@ const App = ( props ) => {
     setNewNumber(event.target.value)
   }
 
-  // const personsToShow = showAll
-  //   ? persons
-  //   : persons.filter(note => note.important === true)
-
   return(
     <div>
       <h2>Phonebook</h2>
-      {/* <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all' }
-        </button>
-      </div> */}
-      {/* <ul>
-        {personsToShow.map(person =>
-          <Persons key={person.id} note={person} />
-        )}
-      </ul> */}
       <form onSubmit={addPerson}>
         <div>Name: <input
             value={newPerson}
