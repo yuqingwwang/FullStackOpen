@@ -3,10 +3,16 @@ import axios from 'axios'
 import Countries from './components/Countries'
 import CountryData from './components/CountryData';
 
+
 function App() {
   const [query, setQuery] = useState("");
   const [countries, setCountries] = useState([]);
   const [countriesToShow, setCountriesToShow] = useState([]);
+  const [lat, setLat] = useState([]);
+  const [lon, setLon] = useState([]);
+
+  const api_key = process.env.REACT_APP_API_KEY
+
 
   useEffect(() => {
     console.log('effect')
