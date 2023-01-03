@@ -15,9 +15,6 @@ const App = ( props ) => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter ] = useState('')
 
-  const personsAfterFilter = filter === ''  ? persons : persons.filter(person =>
-      person.name.toLowerCase().includes(filter.toLowerCase()))
-
   const addPerson = (event) => {
     event.preventDefault()
     const noteObject = {
@@ -36,18 +33,19 @@ const App = ( props ) => {
     }
   }
 
+  const personsAfterFilter = filter === ''? persons :
+   persons.filter(person =>
+    person.name.toLowerCase().includes(filter.toLowerCase()))
+
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewPerson(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
   const handleFilter = (event) => {
-    console.log(event.target.value)
     setFilter(event.target.value)
   }
 
