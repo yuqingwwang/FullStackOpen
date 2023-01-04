@@ -1,6 +1,7 @@
+import React from 'react';
 import Person from './Person'
 
-const Persons = ({ persons }) => {
+const Persons = ({ persons, deletePerson }) => {
   return (
     <div>
       <ul>
@@ -9,6 +10,7 @@ const Persons = ({ persons }) => {
             <Person
               key={person.id}
               person={person}
+              deletePerson={deletePerson}
             />
         )}
       </ul>
@@ -16,4 +18,4 @@ const Persons = ({ persons }) => {
   )
 }
 
-export default Persons
+export default Persons;

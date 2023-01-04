@@ -61,6 +61,17 @@ const App = ( props ) => {
     setFilter(event.target.value)
   }
 
+  const deletePerson = (id) => {
+    const toDelete = persons.find(n => n.id === id)
+
+    noteService
+      .remove(id)
+      .then(returnedNote => {
+        persons.map(person => person.id !== id ? person : returnedNote)
+      })
+    setPersons(persons.filter(person => person.id !== id))
+  }
+
   return(
     <div>
       <h2>Phonebook</h2>
@@ -78,7 +89,8 @@ const App = ( props ) => {
       />
       <h2>Numbers</h2>
       <Persons
-        persons={personsAfterFilter}/>
+        persons={personsAfterFilter}
+        deletePerson={deletePerson}/>
     </div>
   )
   }
