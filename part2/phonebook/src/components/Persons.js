@@ -1,6 +1,6 @@
 import Person from './Person'
 
-const Persons = ({ persons, deletePerson }) => {
+const Persons = ({ persons }) => {
   return (
     <div>
       <ul>
