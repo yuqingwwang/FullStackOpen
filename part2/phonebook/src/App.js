@@ -97,7 +97,7 @@ const App = ( props ) => {
         .catch(error => {
           setMessageClass('bad');
           setMessage(
-            `Note '${person}' was already removed from server`);
+            `${person.name} has already been removed from server`);
           setTimeout(() => {
             setMessage(null)
           }, 5000);
@@ -120,7 +120,7 @@ const App = ( props ) => {
 
   return(
     <div>
-      <h1>Phonebook</h1>
+      <h2>Phonebook</h2>
       <Notification message={message} messageClass={messageClass} />
       <Filter
         filter={filter}
@@ -134,7 +134,7 @@ const App = ( props ) => {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange}
       />
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       <Persons
         persons={personsAfterFilter}
         deletePerson={deletePerson}/>

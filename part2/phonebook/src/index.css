@@ -1,20 +1,35 @@
-h1 {
-  color: green;
-  font-style: italic;
+h2, h3 {
+  color: hsl(120, 68%, 21%);
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 20px;
 }
 
 li {
   color: grey;
-  font-size: 15px;
+  font-size: 18px;
   padding-top: 3px;
 }
 
-.person {
-  color: grey;
-  padding-top: 5px;
-  font-size: 15px;
+button {
+  padding: 5px;
 }
 
+li > button {
+  color: black;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+form > div {
+  padding-bottom: 10px;
+}
 .error {
   color: red;
   background: lightgrey;
