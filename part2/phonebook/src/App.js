@@ -3,14 +3,29 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import personService from './services/phonebook'
+import Notification from './components/Notification'
 
-
+const Footer = () => {
+  const footerStyle = {
+    color: 'green',
+    fontStyle: 'italic',
+    fontSize: 16
+  }
+  return (
+    <div style={footerStyle}>
+      <br />
+      <em>Phonebook app, Department of Computer Science, University of Helsinki 2022</em>
+    </div>
+  )
+}
 
 const App = ( props ) => {
   const [persons, setPersons] = useState([])
   const [newPerson, setNewPerson] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter ] = useState('')
+  const [message, setMessage] = useState(null)
+  const [messageClass, setMessageClass] = useState('bad')
 
   useEffect(() => {
     console.log('effect')
@@ -28,7 +43,8 @@ const App = ( props ) => {
     event.preventDefault()
     const personObject = {
       name: newPerson,
-      number: newNumber
+      number: newNumber,
+      id: newPerson
     }
     const checkPerson = persons.find(person =>
       person.name.toLowerCase() === personObject.name.toLowerCase())
@@ -45,17 +61,21 @@ const App = ( props ) => {
 
           personService
           .update(personId, personObject)
-          .then(returnedNote => {
-            setPersons(persons.map(person => person.id !== personId ? person : returnedNote))
-          })
         }
         }
     }
-    else{
+    else {
       personService
           .create(personObject)
           .then(returnedNote => {
-            setPersons(persons.concat(personObject))});
+            setPersons(persons.concat(personObject))
+            setPersons(persons.map(person => person.name !== newPerson ? person : returnedNote))});
+
+      setMessage(`contact ${newPerson} updated`)
+      setMessageClass('good')
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000);
     };
     setNewPerson('')
     setNewNumber('')
@@ -74,8 +94,17 @@ const App = ( props ) => {
         .then(returnedNote => {
           persons.map(person => person.id !== id ? person : returnedNote)
         })
-      setPersons(persons.filter(person => person.id !== id))}
+        .catch(error => {
+          setMessageClass('bad');
+          setMessage(
+            `Note '${person}' was already removed from server`);
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000);
+          setPersons(persons.filter(person => person.id !== id));
+        })
     }
+  }
 
   const handleNameChange = (event) => {
       setNewPerson(event.target.value)
@@ -91,7 +120,8 @@ const App = ( props ) => {
 
   return(
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification message={message} messageClass={messageClass} />
       <Filter
         filter={filter}
         handleFilter={handleFilter}
@@ -108,9 +138,9 @@ const App = ( props ) => {
       <Persons
         persons={personsAfterFilter}
         deletePerson={deletePerson}/>
+      <Footer />
     </div>
   )
 }
-
 
 export default App
