@@ -62,15 +62,17 @@ const App = ( props ) => {
   }
 
   const deletePerson = (id) => {
-    const toDelete = persons.find(n => n.id === id)
+    const person = persons.find(n => n.id === id)
+    const confirmDelete = window.confirm(`Are you sure you want to delete ${person.name}?`)
 
-    noteService
-      .remove(id)
-      .then(returnedNote => {
-        persons.map(person => person.id !== id ? person : returnedNote)
-      })
-    setPersons(persons.filter(person => person.id !== id))
-  }
+    if (confirmDelete) {
+      noteService
+        .remove(id)
+        .then(returnedNote => {
+          persons.map(person => person.id !== id ? person : returnedNote)
+        })
+      setPersons(persons.filter(person => person.id !== id))}
+    }
 
   return(
     <div>
@@ -93,6 +95,6 @@ const App = ( props ) => {
         deletePerson={deletePerson}/>
     </div>
   )
-  }
+}
 
 export default App
