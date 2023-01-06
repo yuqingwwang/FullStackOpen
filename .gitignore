@@ -1,9 +1,5 @@
 .DS_Store
 .env
 **/node_modules
-**/public
-package.json
-package-lock.json
 
 notes_app
-
