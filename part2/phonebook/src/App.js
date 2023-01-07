@@ -69,17 +69,24 @@ const App = ( props ) => {
           .create(personObject)
           .then(returnedNote => {
             setPersons(persons.concat(personObject))
-            setPersons(persons.map(person => person.name !== newPerson ? person : returnedNote))});
-
-      setMessage(`contact ${newPerson} updated`)
-      setMessageClass('good')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000);
-    };
+            setPersons(persons.map(person => person.name !== newPerson ? person : returnedNote))
+            setMessage(`contact ${newPerson} updated`)
+            setMessageClass('good')
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)})
+      .catch(error => {
+        console.log(error.response.status)
+        setMessageClass('bad');
+        setMessage(
+          `The name you entered is too short`);
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000);
+      })
     setNewPerson('')
     setNewNumber('')
-  }
+  }}
 
   const personsAfterFilter = filter === ''? persons : persons.filter(person =>
     person.name.toLowerCase().includes(filter.toLowerCase()))
