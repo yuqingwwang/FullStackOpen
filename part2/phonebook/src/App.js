@@ -61,6 +61,14 @@ const App = ( props ) => {
 
           personService
           .update(personId, personObject)
+          .catch(error => {
+            setMessageClass('bad');
+            console.log(error.response.data);
+            setMessage(error.message);
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000);
+          })
         }
         }
     }
@@ -76,10 +84,9 @@ const App = ( props ) => {
               setMessage(null)
             }, 5000)})
       .catch(error => {
-        console.log(error.response.status)
         setMessageClass('bad');
-        setMessage(
-          `The name you entered is too short`);
+        console.log(error.response.data)
+        setMessage(`Double check the name and number meet the formats`);
         setTimeout(() => {
           setMessage(null)
         }, 5000);
@@ -103,6 +110,7 @@ const App = ( props ) => {
         })
         .catch(error => {
           setMessageClass('bad');
+          console.log(error.response.data);
           setMessage(
             `${person.name} has already been removed from server`);
           setTimeout(() => {
