@@ -46,3 +46,38 @@ describe('total likes, multiple blogs', () => {
     expect(result).toBe(27)
   })
 })
+
+describe('most liked blog', () => {
+  const blogs = [
+    {
+      title: 'Who am I',
+      author: 'Bob',
+      url: 'www.google.com',
+      likes: 5,
+    },
+    {
+      title: 'Who are you',
+      author: 'Sam',
+      url: 'www.google.com',
+      likes: 20,
+    },
+    {
+      title: 'I am Buzz',
+      author: 'Buzz',
+      url: 'www.google.com',
+      likes: 2,
+    }
+  ]
+
+  test('return the most liked post', () => {
+    const result = listHelper.favoriteBlog(blogs)
+
+    const ans = {
+      title: 'Who are you',
+      author: 'Sam',
+      url: 'www.google.com',
+      likes: 20,
+    }
+    expect(result).toEqual(ans)
+  })
+})
