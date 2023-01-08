@@ -1,13 +1,13 @@
 const emailsRouter = require('express').Router()
 const Email = require('../models/email')
 
-emailsRouter.get('/', (request, response) => {
+emailsRouter.get('/', (request, response, next) => {
   Email
     .find({})
     .then(blogs => {
-    response.json(blogs)
-  })
-  .catch(error => next(error))
+      response.json(blogs)
+    })
+    .catch(error => next(error))
 })
 
 emailsRouter.post('/', (request, response, next) => {
