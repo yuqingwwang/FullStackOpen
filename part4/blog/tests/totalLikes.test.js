@@ -57,7 +57,7 @@ describe('most liked blog', () => {
     },
     {
       title: 'Who are you',
-      author: 'Sam',
+      author: 'Bob',
       url: 'www.google.com',
       likes: 20,
     },
@@ -74,7 +74,7 @@ describe('most liked blog', () => {
 
     const ans = {
       title: 'Who are you',
-      author: 'Sam',
+      author: 'Bob',
       url: 'www.google.com',
       likes: 20,
     }
