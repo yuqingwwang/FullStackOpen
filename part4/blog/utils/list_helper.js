@@ -21,24 +21,16 @@ const favoriteBlog = (blogs) => {
 }
 
 const mostBlogs = (blogs) => {
-  const authors = {}
-  const popularAuthor = {
-    author: '',
-    blogs: 0
-  }
+  const popularAuthor = _.head(_(blogs)
+    .countBy('author')
+    .entries()
+    .maxBy(_.last))
 
-  blogs.forEach((blog) => {
-    authors[blog.author] = authors[blog.author] ? authors[blog.author] + 1 : 1
-  })
+  const numberOfBlogs = _.countBy(blogs, {author: popularAuthor}).true
 
-  for (const [author, blogs] of Object.entries(authors)) {
-    if (blogs > popularAuthor.blogs) {
-      popularAuthor.author = author
-      popularAuthor.blogs = blogs
-    }
-  }
+  const res = {author: popularAuthor, blogs: numberOfBlogs}
 
-  return popularAuthor
+  return res
 }
 
 module.exports = {
