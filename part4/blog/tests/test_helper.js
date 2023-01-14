@@ -2,19 +2,16 @@ const Email = require('../models/email')
 
 const initialEmails = [
   {
-    content: 'HTML is easy',
-    date: new Date(),
-    important: false
-  },
-  {
-    content: 'Browser can execute only Javascript',
-    date: new Date(),
-    important: true
+    title: 'Hello',
+    author: 'beebo',
+    url: 'www.google.com',
+    likes: 3,
+    id: '63bb33c82f9877ef3172c643'
   }
 ]
 
 const nonExistingId = async () => {
-  const note = new Email({ content: 'willremovethissoon', date: new Date() })
+  const note = new Email({})
   await note.save()
   await note.remove()
 
@@ -27,5 +24,5 @@ const notesInDb = async () => {
 }
 
 module.exports = {
-  initialNotes, nonExistingId, notesInDb
+  initialEmails, nonExistingId, notesInDb
 }
