@@ -11,18 +11,18 @@ const initialEmails = [
 ]
 
 const nonExistingId = async () => {
-  const note = new Email({})
-  await note.save()
-  await note.remove()
+  const email = new Email({})
+  await email.save()
+  await email.remove()
 
-  return note._id.toString()
+  return email._id.toString()
 }
 
-const notesInDb = async () => {
-  const notes = await Note.find({})
-  return notes.map(note => note.toJSON())
+const emailsInDb = async () => {
+  const emails = await Email.find({})
+  return emails.map(email => email.toJSON())
 }
 
 module.exports = {
-  initialEmails, nonExistingId, notesInDb
+  initialEmails, nonExistingId, emailsInDb
 }
