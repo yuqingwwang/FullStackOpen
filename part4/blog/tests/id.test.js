@@ -7,7 +7,7 @@ const api = supertest(app)
 
 test('verify there is an id', async() => {
   console.log('entered test')
-  const response = await api.get('/api/emails')
+  const response = await api.get('/api/blogs')
   console.log(response.body['id'])
 
   expect(response.body[0].id).toBeDefined()

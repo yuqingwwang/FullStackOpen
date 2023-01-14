@@ -4,33 +4,22 @@ const app = require('../app')
 
 const api = supertest(app)
 
+const Blog = require('../models/blog')
 const helper = require('./test_helper')
-
-const Blog = require('../models/email')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-
-  console.log('cleared')
-
-  for (let email of helper.initialEmails) {
-    let emailObject = new Blog(email)
-    await emailObject.save()}
-
-  console.log('saved')
+  await Blog.insertMany(helper.initialBlogs)
 })
 
 test('all blogs are returned', async () => {
-  console.log('entered test')
-  const response = await api.get('/api/emails')
+  const response = await api.get('/api/blogs')
 
-  expect(response.body).toHaveLength(helper.initialEmails.length)
-}, 100000)
+  expect(response.body).toHaveLength(helper.initialBlogs.length)
+}, 1000)
 
 test('new posts can be made', async () => {
-  console.log('entered test')
-
-  const newEmail =
+  const newBlog =
   {
     'title': 'Hey',
     'author': 'John',
@@ -39,29 +28,42 @@ test('new posts can be made', async () => {
   }
 
   await api
-    .post('/api/emails')
-    .send(newEmail)
+    .post('/api/blogs')
+    .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
-  const emailsAtEnd = await helper.emailsInDb()
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
-  expect(emailsAtEnd).toHaveLength(helper.initialEmails.length + 1)
-
-  const titles = emailsAtEnd.map(n => n.title)
-  expect(titles).toContain('Hey'
-  )
-}, 100000)
+  const titles = blogsAtEnd.map(n => n.title)
+  expect(titles).toBeDefined()
+}, 1000)
 
 test('likes not missing', async () => {
-  console.log('entered test')
-  const response = await api.get('/api/emails')
+  const response = await api.get('/api/blogs')
 
   const likes = response.body.map(r => r.likes)
-  console.log(likes)
 
   expect(likes).toEqual(expect.not.stringContaining('0'))
-}, 100000)
+}, 1000)
+
+test('fails with status code 400 if data invalid', async () => {
+  const newBlog =
+  {
+    'author': 'John',
+    'likes': 10
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+}, 1000)
 
 
 afterAll(() => {

@@ -1,6 +1,6 @@
-const Email = require('../models/email')
+const Blog = require('../models/blog')
 
-const initialEmails = [
+const initialBlogs = [
   {
     title: 'Hello',
     author: 'beebo',
@@ -11,18 +11,18 @@ const initialEmails = [
 ]
 
 const nonExistingId = async () => {
-  const email = new Email({})
-  await email.save()
-  await email.remove()
+  const blogs = new Blog({})
+  await blogs.save()
+  await blogs.remove()
 
-  return email._id.toString()
+  return blogs._id.toString()
 }
 
-const emailsInDb = async () => {
-  const emails = await Email.find({})
-  return emails.map(email => email.toJSON())
+const blogsInDb = async () => {
+  const blogs = await Blog.find({})
+  return blogs.map(blog => blog.toJSON())
 }
 
 module.exports = {
-  initialEmails, nonExistingId, emailsInDb
+  initialBlogs, nonExistingId, blogsInDb
 }

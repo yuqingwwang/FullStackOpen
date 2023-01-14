@@ -1,17 +1,18 @@
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const cors = require('cors')
 
-const emailsRouter = require('./controllers/emails')
+const blogsRouter = require('./controllers/blogs')
 const middleware = require('./utils/middleware')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-require('express-async-errors')
 
-logger.info('connecting to', config.MONGODB_URI)
+const url = config.MONGODB_URI
+logger.info('connecting to', url)
 
-mongoose.connect(config.MONGODB_URI)
+mongoose.connect(url)
   .then(() => {
     logger.info('connected to MongoDB')
   })
@@ -24,7 +25,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/emails', emailsRouter)
+app.use('/api/blogs', blogsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
