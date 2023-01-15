@@ -6,7 +6,7 @@ const initialBlogs = [
     author: 'beebo',
     url: 'www.google.com',
     likes: 3,
-    id: '63bb33c82f9877ef3172c643'
+    id: '1'
   }
 ]
 

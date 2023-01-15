@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-"title": "Goodbye",
-"author": "theodore",
-"url": "www.wikipedia.com",
-"likes": 10
+"title": "sdfg",
+"author": "asfsdg",
+"url": "www.sdfgfdhf.com",
+"likes": 25
 }

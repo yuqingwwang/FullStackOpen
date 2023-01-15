@@ -17,7 +17,7 @@ describe('when there is initially some notes saved', () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(helper.initialBlogs.length
-  )}, 1000)
+    )}, 1000)
 
   describe('addition of a new note', () => {
     test('succeeds with valid data', async () => {
@@ -44,6 +44,7 @@ describe('when there is initially some notes saved', () => {
       )
     }, 1000)
   })
+
 
   test('likes not missing', async () => {
     const response = await api.get('/api/blogs')
@@ -90,6 +91,33 @@ describe('when there is initially some notes saved', () => {
       expect(title).not.toContain(blogToDelete.title)
     })
   })
+
+  test('updating the blog', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const newBlog = (
+      {
+        'title': 'Hello',
+        'url': 'www.wikipedia.com',
+        'likes': 200,
+        'id': blogToUpdate.id
+      })
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    console.log(blogsAtEnd)
+
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialBlogs.length
+    )
+  }, 1000)
 })
 
 afterAll(() => {
