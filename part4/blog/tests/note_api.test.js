@@ -112,8 +112,6 @@ describe('when there is initially some notes saved', () => {
 
     const blogsAtEnd = await helper.blogsInDb()
 
-    console.log(blogsAtEnd)
-
     expect(blogsAtEnd).toHaveLength(
       helper.initialBlogs.length
     )

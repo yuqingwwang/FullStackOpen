@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-"title": "sdfg",
-"author": "asfsdg",
-"url": "www.sdfgfdhf.com",
-"likes": 25
+"title": "dfs",
+"author": "dsf",
+"url": "www.grwfad.com",
+"likes": 25232
 }
