@@ -1,16 +1,24 @@
 const mongoose = require('mongoose')
-
 const supertest = require('supertest')
+const Blog = require('../models/blog')
+const helper = require('./test_helper')
+
+
 const app = require('../app')
 
 const api = supertest(app)
 
-test('verify there is an id', async() => {
-  console.log('entered test')
-  const response = await api.get('/api/blogs')
-  console.log(response.body['id'])
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  await Blog.insertMany(helper.initialBlogs)
+})
 
-  expect(response.body[0].id).toBeDefined()
+test('verify there is an id', async() => {
+  const response = await api.get('/api/blogs')
+  const ids = response.body.map(r => r.id)
+  console.log(ids)
+
+  expect(ids).toBeDefined()
 })
 
 afterAll(() => {
