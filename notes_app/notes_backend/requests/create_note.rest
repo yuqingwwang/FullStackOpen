@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+  "content": "async/await simplifies making async calls",
+  "important": true,
+  "userId": "63c5ded629c02278aeb430b8"
+}
