@@ -5,13 +5,26 @@ const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const helper = require('./test_helper')
+const bcrypt = require('bcrypt')
+
 
 describe('when there is initially some blogs saved', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
     await Blog.insertMany(helper.initialBlogs)
+    await User.deleteMany({})
+
+    const passwordHash = await bcrypt.hash('salainen', 10)
+    const user = new User({
+      username: 'mluukai',
+      passwordHash
+    })
+
+    await user.save()
+
   })
 
   test('all blogs are returned', async () => {
@@ -22,6 +35,19 @@ describe('when there is initially some blogs saved', () => {
 
   describe('addition of a new note', () => {
     test('succeeds with valid data', async () => {
+      const user = {
+        username: 'mluukai',
+        password: 'salainen',
+      }
+
+      const loginUser = await api
+        .post('/api/login')
+        .send(user)
+
+      const headers = {
+        'Authorization': `bearer ${loginUser.body.token}`
+      }
+
       const newBlog =
       {
         'title': 'Hey',
@@ -34,6 +60,7 @@ describe('when there is initially some blogs saved', () => {
         .post('/api/blogs')
         .send(newBlog)
         .expect(201)
+        .set(headers)
         .expect('Content-Type', /application\/json/)
 
       const blogsAtEnd = await helper.blogsInDb()
@@ -55,6 +82,18 @@ describe('when there is initially some blogs saved', () => {
   }, 1000)
 
   test('fails with status code 400 if data invalid', async () => {
+    const user = {
+      username: 'mluukai',
+      password: 'salainen',
+    }
+
+    const loginUser = await api
+      .post('/api/login')
+      .send(user)
+
+    const headers = {
+      'Authorization': `bearer ${loginUser.body.token}`
+    }
     const newBlog =
     {
       'author': 'John',
@@ -65,6 +104,7 @@ describe('when there is initially some blogs saved', () => {
       .post('/api/blogs')
       .send(newBlog)
       .expect(400)
+      .set(headers)
 
     const blogsAtEnd = await helper.blogsInDb()
 
@@ -73,17 +113,44 @@ describe('when there is initially some blogs saved', () => {
 
   describe('deletion of a blog', () => {
     test('succeeds with status code 204 if id is valid', async () => {
+      const user = {
+        username: 'mluukai',
+        password: 'salainen',
+      }
+
+      const loginUser = await api
+        .post('/api/login')
+        .send(user)
+
+      const headers = {
+        'Authorization': `bearer ${loginUser.body.token}`
+      }
+
+      const newBlog =
+      {
+        'title': 'Hey',
+        'author': 'John',
+        'url': 'www.google.com',
+        'likes': 10
+      }
+
+      await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .set(headers)
+
       const blogsAtStart = await helper.blogsInDb()
-      const blogToDelete = blogsAtStart[0]
+      const blogToDelete = blogsAtStart[1]
 
       await api
         .delete(`/api/blogs/${blogToDelete.id}`)
         .expect(204)
+        .set(headers)
 
       const blogsAtEnd = await helper.blogsInDb()
 
       expect(blogsAtEnd).toHaveLength(
-        helper.initialBlogs.length - 1
+        helper.initialBlogs.length
       )
 
       const title = blogsAtEnd.map(r => r.title)

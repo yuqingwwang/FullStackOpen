@@ -4,11 +4,10 @@ const User = require('../models/user')
 
 const initialBlogs = [
   {
-    title: 'Hello',
-    author: 'beebo',
-    url: 'www.google.com',
-    likes: 3,
-    id: '1'
+    'title': 'i wonder why',
+    'author': 'tom jacobs',
+    'url': 'www.hahahha.com',
+    'likes': 3
   }
 ]
 
