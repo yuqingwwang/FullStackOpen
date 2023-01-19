@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjYzYzg4YjhmNDEwNDg5NTkyNzJlODk4OCIsImlhdCI6MTY3NDA4Nzk3NH0.17C2A3h3xlkijF5WFFirjmDN2I8B9wXRhh1B4MPgWl0
 
 {
-"title": "dfs",
-"author": "dsf",
-"url": "www.grwfad.com",
-"likes": 25232,
-"userId": "63c88459e880f23c911ffb7f"
+"title": "asfdsa",
+"author": "dafsgeawf",
+"url": "www.dsfdds.com",
+"likes": 34
 }
