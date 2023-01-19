@@ -3,8 +3,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjYzYzg4YjhmNDEwNDg5NTkyNzJlODk4OCIsImlhdCI6MTY3NDA4Nzk3NH0.17C2A3h3xlkijF5WFFirjmDN2I8B9wXRhh1B4MPgWl0
 
 {
-"title": "asfdsa",
-"author": "dafsgeawf",
-"url": "www.dsfdds.com",
-"likes": 34
+"title": "i wonder why",
+"author": "tom jacobs",
+"url": "www.hahahha.com",
+"likes": 3
 }
