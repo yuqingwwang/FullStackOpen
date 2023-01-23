@@ -4,7 +4,6 @@ import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState('')
@@ -12,6 +11,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -62,23 +64,20 @@ const App = () => {
 
   const addBlog = (event) => {
     event.preventDefault()
-    const noteObject = {
-      content: newBlog,
-      date: new Date().toISOString(),
-      important: Math.random() > 0.5,
-      id: blogs.length + 1,
+    const blogObject = {
+      title: title,
+      author: author,
+      url: url
     }
 
+    console.log(blogObject)
+
     blogService
-      .create(noteObject)
-      .then(returnedNote => {
-        setBlogs(blogs.concat(returnedNote))
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
       })
-  }
-
-  const handleNoteChange = (event) => {
-    setNewBlog(event.target.value)
   }
 
   const loginForm = () => (
@@ -108,28 +107,54 @@ const App = () => {
     </div>
   )
 
-  const noteForm = () => (
-    <form onSubmit={addBlog}>
-      <input
-        value={newBlog}
-        onChange={handleNoteChange}
-      />
-      <button type="submit">save</button>
-    </form>
+  const blogForm = () => (
+    <div>
+      <h2>create new</h2>
+      <form onSubmit={addBlog}>
+        <div>
+          title:
+          <input
+            type="text"
+            value={title}
+            name="Title"
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </div>
+        <div>
+          author:
+          <input
+            type="text"
+            value={author}
+            name="Author"
+            onChange={({ target }) => setAuthor(target.value)}
+          />
+        </div>
+        <div>
+          url:
+          <input
+            type="text"
+            value={url}
+            name="Url"
+            onChange={({ target }) => setUrl(target.value)}
+          />
+        </div>
+        <button type="submit">create</button>
+      </form>
+  </div>
   )
 
   return (
     <div>
       <Notification message={errorMessage} />
-
       {user === null ?
         loginForm():
         <div>
-          <p>{JSON.parse(window.localStorage.loggedNoteappUser).username} logged-in</p>
-          <button onClick={handleLogOut}>Log out</button>
           <h2>blogs</h2>
-          {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />)}
+          <p>{JSON.parse(window.localStorage.loggedNoteappUser).username} logged in
+          <button onClick={handleLogOut}>Log out</button> </p>
+        {blogForm()}
+        {blogs.map(blog =>
+        <Blog key={blog.id} blog={blog} />)}
         </div>
       }
     </div>
