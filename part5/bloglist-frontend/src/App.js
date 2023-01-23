@@ -53,6 +53,13 @@ const App = () => {
     }
   }
 
+  const handleLogOut = async (event) => {
+    event.preventDefault()
+
+    window.localStorage.removeItem('loggedNoteappUser')
+    setUser(null)
+  }
+
   const addBlog = (event) => {
     event.preventDefault()
     const noteObject = {
@@ -119,6 +126,7 @@ const App = () => {
         loginForm():
         <div>
           <p>{JSON.parse(window.localStorage.loggedNoteappUser).username} logged-in</p>
+          <button onClick={handleLogOut}>Log out</button>
           <h2>blogs</h2>
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />)}
