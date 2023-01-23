@@ -6,6 +6,7 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [successMessage, setSuccessMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -78,6 +79,10 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
       })
+    setSuccessMessage('a new blog '+ blogObject.title +' by '+ blogObject.author + ' added')
+    setTimeout(() => {
+      setSuccessMessage(null)
+    }, 5000);
   }
 
   const loginForm = () => (
@@ -145,7 +150,8 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification message={successMessage} messageClass='success' />
+      <Notification message={errorMessage} messageClass='bad'/>
       {user === null ?
         loginForm():
         <div>
