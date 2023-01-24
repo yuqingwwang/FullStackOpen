@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -39,12 +42,12 @@ const App = () => {
         username, password,
       })
 
+      setUser(user)
+      blogService.setToken(user.token)
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
       )
 
-      blogService.setToken(user.token)
-      setUser(user)
       console.log(user)
       setUsername('')
       setPassword('')
@@ -63,15 +66,13 @@ const App = () => {
     setUser(null)
   }
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url
-    }
 
-    console.log(blogObject)
+  const addBlog = (blogObject) => {
+    // const blogObject = {
+    //   title: title,
+    //   author: author,
+    //   url: url
+    // }
 
     blogService
       .create(blogObject)
@@ -79,73 +80,73 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
       })
+
     setSuccessMessage('a new blog '+ blogObject.title +' by '+ blogObject.author + ' added')
     setTimeout(() => {
       setSuccessMessage(null)
     }, 5000);
   }
 
-  const loginForm = () => (
-    <div>
-      <h2>Log in to application </h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
+  const loginForm = () => {
+    return (
+    <Togglable buttonLabel='login'>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
           />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
-  )
+    </Togglable>
+    )
+    }
 
   const blogForm = () => (
-    <div>
-      <h2>create new</h2>
-      <form onSubmit={addBlog}>
-        <div>
-          title:
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
+    <Togglable buttonLabel='new blog'>
+          <BlogForm
+            createBlog={addBlog}
+            title={title}
+            setTitle={setTitle}
+            author={author}
+            setAuthor={setAuthor}
+            url={url}
+            setUrl={setUrl}
           />
-        </div>
-        <div>
-          author:
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url:
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">create</button>
-      </form>
-  </div>
+    </Togglable>
+
+  //   <div>
+  //     <h2>create new</h2>
+  //     <form onSubmit={addBlog}>
+  //       <div>
+  //         title:
+  //         <input
+  //           type="text"
+  //           value={title}
+  //           name="Title"
+  //           onChange={({ target }) => setTitle(target.value)}
+  //         />
+  //       </div>
+  //       <div>
+  //         author:
+  //         <input
+  //           type="text"
+  //           value={author}
+  //           name="Author"
+  //           onChange={({ target }) => setAuthor(target.value)}
+  //         />
+  //       </div>
+  //       <div>
+  //         url:
+  //         <input
+  //           type="text"
+  //           value={url}
+  //           name="Url"
+  //           onChange={({ target }) => setUrl(target.value)}
+  //         />
+  //       </div>
+  //       <button type="submit">create</button>
+  //     </form>
+  // </div>
   )
 
   return (
