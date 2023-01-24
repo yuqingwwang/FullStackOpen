@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
@@ -15,9 +16,8 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [blog, setNewBlog] = useState([])
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -68,11 +68,7 @@ const App = () => {
 
 
   const addBlog = (blogObject) => {
-    // const blogObject = {
-    //   title: title,
-    //   author: author,
-    //   url: url
-    // }
+    blogFormRef.current.toggleVisibility()
 
     blogService
       .create(blogObject)
@@ -102,51 +98,9 @@ const App = () => {
     }
 
   const blogForm = () => (
-    <Togglable buttonLabel='new blog'>
-          <BlogForm
-            createBlog={addBlog}
-            title={title}
-            setTitle={setTitle}
-            author={author}
-            setAuthor={setAuthor}
-            url={url}
-            setUrl={setUrl}
-          />
+    <Togglable buttonLabel='new blog' ref={blogFormRef}>
+      <BlogForm createBlog={addBlog}/>
     </Togglable>
-
-  //   <div>
-  //     <h2>create new</h2>
-  //     <form onSubmit={addBlog}>
-  //       <div>
-  //         title:
-  //         <input
-  //           type="text"
-  //           value={title}
-  //           name="Title"
-  //           onChange={({ target }) => setTitle(target.value)}
-  //         />
-  //       </div>
-  //       <div>
-  //         author:
-  //         <input
-  //           type="text"
-  //           value={author}
-  //           name="Author"
-  //           onChange={({ target }) => setAuthor(target.value)}
-  //         />
-  //       </div>
-  //       <div>
-  //         url:
-  //         <input
-  //           type="text"
-  //           value={url}
-  //           name="Url"
-  //           onChange={({ target }) => setUrl(target.value)}
-  //         />
-  //       </div>
-  //       <button type="submit">create</button>
-  //     </form>
-  // </div>
   )
 
   return (
