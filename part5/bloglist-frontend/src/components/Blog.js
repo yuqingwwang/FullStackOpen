@@ -3,7 +3,9 @@ import { useState } from 'react'
 
 const Blog = ({
   blog,
-  handleLike
+  handleLike,
+  handleDelete,
+  loggedUser
 })=> {
 
   const [visible, setVisible] = useState(false)
@@ -21,6 +23,14 @@ const Blog = ({
 
   const toggleVisibility = () => {
     setVisible(!visible)
+  }
+
+  const deleteButton = () => {
+    if (blog.user.username === loggedUser) {
+      return (
+        <button id='delete' onClick={() => handleDelete()}>delete</button>
+      )
+    }
   }
 
   return(
@@ -41,7 +51,7 @@ const Blog = ({
         {blog.author}
       </div>
       <div>
-        <button onClick={toggleVisibility}>Hide</button>
+        {deleteButton()}
       </div>
     </div>
   </div>

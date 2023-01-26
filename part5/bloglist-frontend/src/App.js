@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 
-import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import PostForm from './components/PostForm'
@@ -50,7 +49,6 @@ const App = () => {
         'loggedNoteappUser', JSON.stringify(user)
       )
 
-      console.log(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -94,13 +92,22 @@ const App = () => {
           ? { ...blog, likes: likedBlog.likes }
           : blog
       ))
-    console.log(blogs)
     setNewBlog('')
 
     setSuccessMessage('You liked: ' + likedBlog.title )
     setTimeout(() => {
       setSuccessMessage(null)
     }, 5000);
+  }
+
+  const handleDelete = async (blog) => {
+
+    if (window.confirm(`Remove ${blog.title} by ${blog.author}?`)) {
+      await blogService.remove(blog)
+      setBlogs(
+        blogs.filter(currnetBlog => currnetBlog.id !== blog.id)
+      )
+    }
   }
 
   const loginForm = () => {
@@ -122,6 +129,8 @@ const App = () => {
       blogs={blogs}
       byLikes={byLikes}
       handleLike={handleLike}
+      handleDelete={handleDelete}
+      loggedUser={user.username}
     />
     )
 
