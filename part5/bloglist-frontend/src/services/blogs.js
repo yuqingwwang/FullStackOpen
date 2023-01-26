@@ -28,7 +28,7 @@ const like = async (blog) => {
 
   const response = await axios.put(
     `${ baseUrl }/${blog.id}`,
-    {...blog, likes: blog.likes+1},
+    { ...blog, likes: blog.likes+1 },
     config)
 
   return response.data

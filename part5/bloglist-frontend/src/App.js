@@ -15,6 +15,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // eslint-disable-next-line no-unused-vars
   const [blog, setNewBlog] = useState([])
   const [user, setUser] = useState(null)
 
@@ -79,7 +80,7 @@ const App = () => {
     setSuccessMessage('a new blog '+ blogObject.title +' by '+ blogObject.author + ' added')
     setTimeout(() => {
       setSuccessMessage(null)
-    }, 5000);
+    }, 5000)
   }
 
   const handleLike = async(blog) => {
@@ -97,7 +98,7 @@ const App = () => {
     setSuccessMessage('You liked: ' + likedBlog.title )
     setTimeout(() => {
       setSuccessMessage(null)
-    }, 5000);
+    }, 5000)
   }
 
   const handleDelete = async (blog) => {
@@ -132,7 +133,7 @@ const App = () => {
       handleDelete={handleDelete}
       loggedUser={user.username}
     />
-    )
+  )
 
   const byLikes = (b1, b2) => b2.likes - b1.likes
 
@@ -145,13 +146,13 @@ const App = () => {
         <div>
           <h2>blogs</h2>
           <p>{JSON.parse(window.localStorage.loggedNoteappUser).username} logged in
-          <button onClick={handleLogOut}>Log out</button> </p>
-      <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-        <PostForm
-          handleNewBlog={addBlog}
-        />
-      </Togglable>
-        {blogForm()}
+            <button onClick={handleLogOut}>Log out</button> </p>
+          <Togglable buttonLabel='create new blog' ref={blogFormRef}>
+            <PostForm
+              handleNewBlog={addBlog}
+            />
+          </Togglable>
+          {blogForm()}
         </div>
       }
     </div>
