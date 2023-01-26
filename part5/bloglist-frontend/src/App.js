@@ -3,7 +3,9 @@ import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
-import BlogForm from './components/BlogForm'
+import PostForm from './components/PostForm'
+
+import BlogList from './components/BlogList'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -82,6 +84,25 @@ const App = () => {
     }, 5000);
   }
 
+  const handleLike = async(blog) => {
+
+    const likedBlog = await blogService.like(blog)
+
+    setBlogs(
+      blogs.map(blog =>
+        blog.id === likedBlog.id
+          ? { ...blog, likes: likedBlog.likes }
+          : blog
+      ))
+    console.log(blogs)
+    setNewBlog('')
+
+    setSuccessMessage('You liked: ' + likedBlog.title )
+    setTimeout(() => {
+      setSuccessMessage(null)
+    }, 5000);
+  }
+
   const loginForm = () => {
     return (
     <Togglable buttonLabel='login'>
@@ -97,10 +118,11 @@ const App = () => {
   }
 
   const blogForm = () => (
-    <Togglable buttonLabel='new blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog}/>
-    </Togglable>
-  )
+    <BlogList
+      blogs={blogs}
+      handleLike={handleLike}
+    />
+    )
 
   return (
     <div>
@@ -112,9 +134,12 @@ const App = () => {
           <h2>blogs</h2>
           <p>{JSON.parse(window.localStorage.loggedNoteappUser).username} logged in
           <button onClick={handleLogOut}>Log out</button> </p>
+      <Togglable buttonLabel='create new blog' ref={blogFormRef}>
+        <PostForm
+          handleNewBlog={addBlog}
+        />
+      </Togglable>
         {blogForm()}
-        {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog}/>)}
         </div>
       }
     </div>

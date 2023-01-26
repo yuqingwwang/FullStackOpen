@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
 
-const Blog = ({blog})=> {
+const Blog = ({
+  blog,
+  handleLike
+})=> {
 
   const [visible, setVisible] = useState(false)
 
@@ -13,7 +16,7 @@ const Blog = ({blog})=> {
     marginBottom: 5
   }
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
+  // const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
@@ -26,11 +29,19 @@ const Blog = ({blog})=> {
       {blog.title} <button onClick={toggleVisibility}>View</button>
     </div>
     <div style={showWhenVisible}>
-      {blog.url} <br></br>
-      {blog.likes} <br></br>
-      {blog.author}
-    <button onClick={toggleVisibility}>Hide</button>
+      <div>
+        {blog.url}
       </div>
+      <div>
+        {blog.likes} <button onClick={handleLike}>like</button>
+      </div>
+      <div>
+        {blog.author}
+      </div>
+      <div>
+        <button onClick={toggleVisibility}>Hide</button>
+      </div>
+    </div>
   </div>
   )
 }
