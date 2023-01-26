@@ -4,10 +4,11 @@ import Blog from './Blog'
 
 const BlogList = ({
   blogs,
+  byLikes,
   handleLike
 }) => (
   <div>
-    {blogs.map(blog => (
+    {blogs.sort(byLikes).map(blog => (
       <Blog
         key={blog.id}
         blog={blog}

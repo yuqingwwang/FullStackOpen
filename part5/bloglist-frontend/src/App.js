@@ -120,9 +120,12 @@ const App = () => {
   const blogForm = () => (
     <BlogList
       blogs={blogs}
+      byLikes={byLikes}
       handleLike={handleLike}
     />
     )
+
+  const byLikes = (b1, b2) => b2.likes - b1.likes
 
   return (
     <div>
