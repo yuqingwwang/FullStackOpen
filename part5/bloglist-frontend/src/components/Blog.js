@@ -16,7 +16,7 @@ const Blog = ({
     marginBottom: 5
   }
 
-  // const hideWhenVisible = { display: visible ? 'none' : '' }
+  const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
@@ -26,7 +26,9 @@ const Blog = ({
   return(
   <div style={blogStyle}>
     <div>
-      {blog.title} <button onClick={toggleVisibility}>View</button>
+      {blog.title}
+      <button onClick={toggleVisibility} style={hideWhenVisible}>View</button>
+      <button onClick={toggleVisibility} style={showWhenVisible}>Hide</button>
     </div>
     <div style={showWhenVisible}>
       <div>
