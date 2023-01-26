@@ -2,11 +2,11 @@ const router = require('express').Router()
 const Blog = require('../models/blog')
 
 router.get('/', async (request, response) => {
-  const notes = await Blog
+  const blogs = await Blog
     .find({})
-    .find({}).populate('user', { username: 1, name: 1 })
+    // .find({}).populate('user', { username: 1, name: 1 })
 
-  response.json(notes)
+  response.json(blogs)
 })
 
 router.post('/', async (request, response) => {
@@ -43,7 +43,11 @@ router.delete('/:id', async (request, response) => {
 })
 
 router.put('/:id', async (request, response) => {
+
+
   const blog = request.body
+
+  console.log(blog)
 
   const updatedBlog = await Blog
     .findByIdAndUpdate(
