@@ -35,7 +35,9 @@ const Blog = ({
   return(
     <div style={blogStyle}>
       <div className='blog'>
-        {blog.title}
+        <div placeholder='default'>
+          {blog.title} {blog.author}
+        </div>
         <button onClick={toggleVisibility} style={hideWhenVisible}>View</button>
         <button onClick={toggleVisibility} style={showWhenVisible}>Hide</button>
       </div>
@@ -45,9 +47,6 @@ const Blog = ({
         </div>
         <div>
           {blog.likes} <button onClick={handleLike}>like</button>
-        </div>
-        <div>
-          {blog.author}
         </div>
         <div>
           {deleteButton()}
