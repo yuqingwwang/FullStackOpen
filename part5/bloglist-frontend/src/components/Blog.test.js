@@ -49,3 +49,25 @@ test('shows likes and url when clicked', async () => {
   expect(container).toHaveTextContent('www.hahahha.com')
   expect(container).toHaveTextContent(46)
 })
+
+test('liked twice', async () => {
+  const mockHandler = jest.fn()
+
+  render(
+    <Blog
+      blog={blog}
+      handleLike={mockHandler}
+    />)
+
+  const user = userEvent.setup()
+
+  const viewButton = screen.getByText('View')
+  await user.click(viewButton)
+
+  const likeButton = screen.getByText('like')
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+
+})
