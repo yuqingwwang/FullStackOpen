@@ -40,6 +40,7 @@ const PostForm = ({ handleNewBlog }) => {
               value={title}
               name='Title:'
               onChange={handleTitleChange}
+              placeholder='title'
             />
           </p>
         </label>
@@ -52,6 +53,7 @@ const PostForm = ({ handleNewBlog }) => {
               value={author}
               name="Author:"
               onChange={handleAuthorChange}
+              placeholder='author'
             />
           </p>
         </label>
@@ -64,6 +66,7 @@ const PostForm = ({ handleNewBlog }) => {
               value={url}
               name="Url:"
               onChange={handleUrlChange}
+              placeholder='url'
             />
           </p>
         </label>
