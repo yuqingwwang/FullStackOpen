@@ -61,5 +61,18 @@ describe('blog app', function() {
 
       cy.contains('a note created by cypress')
     })
+
+    it('User can like a blog', function(){
+      cy.contains('create').click()
+      cy.get('#title').type('a note created by cypress')
+      cy.get('#author').type('Mr Bean')
+      cy.get('#url').type('www.happyface.com')
+      cy.get('#submit-button').click()
+
+      cy.get('#view-button').click()
+      cy.get('#like-button').click()
+      cy.contains('1')
+      cy.contains('You liked')
+    })
   })
 })

@@ -27,7 +27,7 @@ const Blog = ({
   const deleteButton = () => {
     if (blog.user.username === loggedUser) {
       return (
-        <button id='delete' onClick={() => handleDelete()}>delete</button>
+        <button id='delete-button' onClick={() => handleDelete()}>delete</button>
       )
     }
   }
@@ -38,15 +38,15 @@ const Blog = ({
         <div placeholder='default'>
           {blog.title} {blog.author}
         </div>
-        <button onClick={toggleVisibility} style={hideWhenVisible}>View</button>
-        <button onClick={toggleVisibility} style={showWhenVisible}>Hide</button>
+        <button id='view-button' onClick={toggleVisibility} style={hideWhenVisible}>View</button>
+        <button id='hide-button' onClick={toggleVisibility} style={showWhenVisible}>Hide</button>
       </div>
       <div style={showWhenVisible}>
         <div>
           {blog.url}
         </div>
         <div>
-          {blog.likes} <button onClick={handleLike}>like</button>
+          {blog.likes} <button id='like-button' onClick={handleLike}>like</button>
         </div>
         <div>
           {deleteButton()}
