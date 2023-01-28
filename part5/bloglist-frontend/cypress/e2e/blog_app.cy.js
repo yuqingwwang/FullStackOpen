@@ -74,5 +74,20 @@ describe('blog app', function() {
       cy.contains('1')
       cy.contains('You liked')
     })
+
+    it.only('User can delete their blog', function(){
+      cy.contains('create').click()
+      cy.get('#title').type('a note created by cypress')
+      cy.get('#author').type('Mr Bean')
+      cy.get('#url').type('www.happyface.com')
+      cy.get('#submit-button').click()
+
+      cy.visit('localhost:3000')
+      cy.get('#view-button').click()
+      cy.get('#delete-button').click()
+      cy.on('window:confirm', () => true)
+
+      cy.get('#blog').should('not.exist')
+    })
   })
 })
