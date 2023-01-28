@@ -2,7 +2,8 @@ module.exports = {
     'env': {
         'node': true,
         'es2021': true,
-        'jest': true
+        'jest/globals': true,
+        "cypress/globals": true
     },
     'extends': 'eslint:recommended',
     'overrides': [
@@ -11,6 +12,8 @@ module.exports = {
         'ecmaVersion': 'latest',
         'sourceType': 'module'
     },
+    "plugins": [
+      "react", "jest", "cypress"],
     'rules': {
         'indent': [
             'error',
