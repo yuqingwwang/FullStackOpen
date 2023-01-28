@@ -4,17 +4,17 @@ const Notification = ({ message, messageClass='bad' }) => {
   }
   if (messageClass === 'bad') {
     return (
-    <div className="error">
-      {message}
-    </div>
+      <div className="error">
+        {message}
+      </div>
     )
   }
 
   if (messageClass === 'success') {
     return (
-    <div className="success">
-      {message}
-    </div>
+      <div className="success">
+        {message}
+      </div>
     )
   }
 }
