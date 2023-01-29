@@ -4,70 +4,57 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-const blog = {
-  'title': 'i wonder why',
-  'author': 'tom jacobs',
-  'url': 'www.hahahha.com',
-  'likes': 46,
-  'user': {
-    'username': 'mluukai',
-    'id': '63c88b8f41048959272e8988'
-  },
-  'id': '63c8935cc3f8c24dbb4b7c74'
-}
+describe('blog', () => {
+  let onLike = jest.fn()
 
-test('renders title and author', () => {
+  beforeEach(() => {
+    const blog = {
+      title: 'Testing is easy',
+      author: 'Kalle Ilves',
+      url: 'http://lynx.fi/testing',
+      likes: 5
+    }
 
-  render(
-    <Blog
+    render(<Blog
       blog={blog}
+      likeBlog={onLike}
+      removeBlog={() => {}}
     />)
+  })
 
-  const input = screen.getByPlaceholderText('default')
+  test('renders by default only title and author', () => {
+    const authorElement = screen.getByText('Kalle Ilves', { exact: false })
+    expect(authorElement).toBeDefined()
 
+    const titleElement = screen.getByText('Testing is easy',  { exact: false })
+    expect(titleElement).toBeDefined()
 
-  expect(input).toHaveTextContent('i wonder why')
+    const urlElement = screen.queryByText('http://lynx.fi/testing')
+    expect(urlElement).toBeNull()
 
-  expect(input).toHaveTextContent('tom jacobs')
+    const likesElement = screen.queryByText('likes 5')
+    expect(likesElement).toBeNull()
+  })
 
-  expect(input).not.toHaveTextContent('www.hahahha.com')
+  test('when expanded also url and like rendered', () => {
+    const showButton = screen.getByText('view')
+    userEvent.click(showButton)
 
-  expect(input).not.toHaveTextContent(46)
-})
+    const urlElement = screen.getByText('http://lynx.fi/testing')
+    expect(urlElement).toBeDefined()
 
-test('shows likes and url when clicked', async () => {
-  const container = render(
-    <Blog
-      blog={blog}
-    />).container
+    const likesElement = screen.getByText('5 likes')
+    expect(likesElement).toBeDefined()
+  })
 
-  const user = userEvent.setup()
-  const button = screen.getByText('View')
+  test('when liked twice, handler is called twice', () => {
+    const showButton = screen.getByText('view')
+    userEvent.click(showButton)
 
-  await user.click(button)
+    const likeButton = screen.getByText('like')
+    userEvent.click(likeButton)
+    userEvent.click(likeButton)
 
-  expect(container).toHaveTextContent('www.hahahha.com')
-  expect(container).toHaveTextContent(46)
-})
-
-test('liked twice', async () => {
-  const mockHandler = jest.fn()
-
-  render(
-    <Blog
-      blog={blog}
-      handleLike={mockHandler}
-    />)
-
-  const user = userEvent.setup()
-
-  const viewButton = screen.getByText('View')
-  await user.click(viewButton)
-
-  const likeButton = screen.getByText('like')
-  await user.click(likeButton)
-  await user.click(likeButton)
-
-  expect(mockHandler.mock.calls).toHaveLength(2)
-
+    expect(onLike.mock.calls).toHaveLength(2)
+  })
 })

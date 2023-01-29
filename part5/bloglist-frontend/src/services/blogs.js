@@ -1,10 +1,14 @@
 import axios from 'axios'
+import userService  from './user'
+
 const baseUrl = '/api/blogs'
 
-let token = null
-
-const setToken = newToken => {
-  token = `bearer ${newToken}`
+const config = () => {
+  return {
+    headers: {
+      Authorization: `bearer ${userService.getToken()}`
+    },
+  }
 }
 
 const getAll = () => {
@@ -13,36 +17,17 @@ const getAll = () => {
 }
 
 const create = async newObject => {
-  const config = {
-    headers: { Authorization: token },
-  }
-
-  const response = await axios.post(baseUrl, newObject, config)
+  const response = await axios.post(baseUrl, newObject, config())
   return response.data
 }
 
-const like = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-
-  const response = await axios.put(
-    `${ baseUrl }/${blog.id}`,
-    { ...blog, likes: blog.likes+1 },
-    config)
-
-  return response.data
+const update = (id, newObject) => {
+  const request = axios.put(`${baseUrl}/${id}`, newObject)
+  return request.then(response => response.data)
 }
 
-const remove = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-
-  const response = await axios.delete(
-    `${ baseUrl }/${blog.id}`,
-    config)
-
-  return response.data
+const remove = (id) => {
+  return axios.delete(`${baseUrl}/${id}`, config())
 }
-export default { getAll, create, like, setToken, remove }
+
+export default { getAll, create, update, remove }
