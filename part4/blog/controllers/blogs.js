@@ -1,12 +1,14 @@
 const router = require('express').Router()
+
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 router.get('/', async (request, response) => {
-  const blogs = await Blog
+  const notes = await Blog
     .find({})
-    .populate('user', { username: 1, name: 1 })
+    .find({}).populate('user', { username: 1, name: 1 })
 
-  response.json(blogs)
+  response.json(notes)
 })
 
 router.post('/', async (request, response) => {
@@ -22,7 +24,11 @@ router.post('/', async (request, response) => {
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
 
-  response.status(201).json(savedBlog)
+  const blogToReturn = await Blog
+    .findById(savedBlog._id)
+    .populate('user', { username: 1, name: 1 })
+
+  response.status(201).json(blogToReturn)
 })
 
 router.delete('/:id', async (request, response) => {
@@ -43,17 +49,14 @@ router.delete('/:id', async (request, response) => {
 })
 
 router.put('/:id', async (request, response) => {
-
   const blog = request.body
-
-  console.log(blog)
 
   const updatedBlog = await Blog
     .findByIdAndUpdate(
       request.params.id,
       blog,
       { new: true, runValidators: true, context: 'query' }
-    )
+    ).populate('user', { username: 1, name: 1 })
 
   response.json(updatedBlog)
 })
