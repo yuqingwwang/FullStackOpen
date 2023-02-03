@@ -1,36 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux'
-import NewAnecdote from "./components/NewAnecdote"
+// import { useSelector, useDispatch } from 'react-redux'
+import AnecdoteForm from "./components/AnecdoteForm"
+import AnecdoteList from "./components/AnecdoteList"
+
 
 const App = () => {
-  const anecdotes = useSelector(state => state)
-  const dispatch = useDispatch()
-
-  const byVotes= (b1, b2) => b2.votes>=b1.votes ? 1 : -1
-
-  const vote = (id) => {
-    dispatch({
-      type: 'NEW_VOTE',
-      payload: {id}
-    })
-    // console.log('vote', id)
-  }
 
   return (
     <div>
-      <h2>Anecdotes</h2>
-      {anecdotes.sort(byVotes).map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
-          </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
-          </div>
-        </div>
-      )}
       <h2>create new</h2>
-      <NewAnecdote/ >
+      <AnecdoteForm/ >
+      <h2>Anecdotes</h2>
+      <AnecdoteList/ >
     </div>
   )
 }
