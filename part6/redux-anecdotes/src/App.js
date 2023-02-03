@@ -5,6 +5,8 @@ const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
 
+  const byVotes= (b1, b2) => b2.votes>=b1.votes ? 1 : -1
+
   const vote = (id) => {
     dispatch({
       type: 'NEW_VOTE',
@@ -16,7 +18,7 @@ const App = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote =>
+      {anecdotes.sort(byVotes).map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
