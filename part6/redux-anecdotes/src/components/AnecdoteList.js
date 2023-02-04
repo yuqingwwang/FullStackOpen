@@ -7,16 +7,17 @@ const NewAnecdote = () => {
   // const anecdotes = useSelector(state => state.anecdote)
   // const byVotes= (b1, b2) => b2.votes>=b1.votes ? 1 : -1
 
+
   const anecdotes = useSelector(state => {
     if (state.filter === '') {
-      return state.anecdote
+      return state.anecdotes
     }
-    return state.anecdote.filter((an) =>
+
+    return state.anecdotes.filter((an) =>
         an.content
           .toLowerCase()
           .includes(state.filter.toLowerCase()))
-  })
-  .sort((a, b) => b.votes - a.votes)
+  }).slice().sort((a, b) => b.votes - a.votes)
 
     const increaseVote = (id) => {
       dispatch(vote(id))
