@@ -7,9 +7,9 @@ import {setAnecdote} from './reducers/anecdoteReducer'
 
 import App from './App'
 
-anecdoteService.getAll().then(anecdotes =>
-  store.dispatch(setAnecdote(anecdotes))
-)
+// anecdoteService.getAll().then(anecdotes =>
+//   store.dispatch(setAnecdote(anecdotes))
+// )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
