@@ -32,7 +32,6 @@ const anecdoteSlice = createSlice({
         id: getId(),
         votes: 0
       })
-      return (state.map(anecdote =>anecdote))
     },
     vote(state, action){
     const id = action.payload.id

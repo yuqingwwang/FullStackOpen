@@ -8,8 +8,8 @@ const App = () => {
 
   return (
     <div>
-      <Notification />
       <Filter/ >
+      <Notification />
       <h2>create new</h2>
       <AnecdoteForm/ >
       <h2>Anecdotes</h2>
