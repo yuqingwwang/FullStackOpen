@@ -20,28 +20,16 @@ const App = () => {
     newAnecdoteMutation.mutate({ content, votes:0})
   }
 
-  // const updateAnecdoteMutation = useMutation(updateAnecdote, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries('anecdotes')
-  //   }
-  // })
-
-  // const updateAnectode = (anecdote) => {
-  //   updateAnecdoteMutation.mutate({...anecdote})
-
-  // }
+  const updateAnecdoteMutation = useMutation(updateAnecdote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('anecdotes')
+    }
+  })
 
   const handleVote = (anecdote) => {
     console.log('vote')
+    updateAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes+1})
   }
-
-  // const anecdotes = [
-  //   {
-  //     "content": "If it hurts, do it more often",
-  //     "id": "47145",
-  //     "votes": 0
-  //   },
-  // ]
 
   const result = useQuery(
     'anecdotes',
