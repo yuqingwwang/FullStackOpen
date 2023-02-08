@@ -52,6 +52,7 @@ const App = () => {
     )
   }
 
+
   const newAnecdoteMutation = useMutation(createAnecdote, {
     onSuccess: () => {
       queryClient.invalidateQueries('anecdotes')
@@ -65,16 +66,14 @@ const App = () => {
     newAnecdoteMutation.mutate({ content, votes:0})
     notificationDispatch({
       type: 'NEW_NOTIFICATION',
-      payload: `New anecdote '${content}' has been successfully added`})
-
-    // setTimeout(() => {
-    //   notificationDispatch({
-    //     type: 'HIDE_NOTIFICATION',
-    //     payload: null
-    //   })
-    // }, 5 * 1000)
-
-    }
+      payload: `Anecdote '${content}' has been successfully added`})
+    setTimeout(function removeNotification(){
+      notificationDispatch({
+        type: 'HIDE_NOTIFICATION',
+        payload: null
+      })
+    }, 5 * 1000)
+  }
 
   const updateAnecdoteMutation = useMutation(updateAnecdote, {
     onSuccess: () => {
@@ -87,8 +86,14 @@ const App = () => {
     updateAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes+1})
     notificationDispatch({
       type: 'NEW_NOTIFICATION',
-      payload: `You have voted for '${anecdote.content}'`})
+      payload: `anecdote '${anecdote.content}' voted`})
     }
+    setTimeout(function removeNotification(){
+      notificationDispatch({
+        type: 'HIDE_NOTIFICATION',
+        payload: null
+      })
+    }, 5 * 1000)
 
   const result = useQuery(
     'anecdotes',
