@@ -1,5 +1,8 @@
-const Notification = () => {
+import { useReducer } from 'react'
+import notificationReducer from './AnecdoteForm'
 
+const Notification = () =>{
+  const [notification, notificationDispatch] = useReducer(notificationReducer, null)
 
   const style = {
     border: 'solid',
@@ -8,9 +11,13 @@ const Notification = () => {
     marginBottom: 5
   }
 
+  if(notification===null){
+    return null
+  }
 
   return (
     <div style={style}>
+      {notification}
     </div>
   )
 }
