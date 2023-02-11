@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate
@@ -40,6 +40,16 @@ const Menu = ( ) => {
   )
 }
 
+const Notification = ({ notification }) => {
+  if (notification === null) return null;
+
+  return (
+    <div>
+      { notification }
+    </div>
+  );
+};
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -60,9 +70,19 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotification(null);
+    }, 5000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [notification]);
+
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`A new anecdote ${anecdote.content} created!`)
   }
   const Anecdote = ({ anecdotes }) => {
     const id = useParams().id
@@ -152,6 +172,7 @@ const App = () => {
     <Router>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification notification={notification}/>
       <Routes>
         <Route path="/anecdotes/:id" element={<Anecdote anecdotes ={anecdotes}/>} />
         <Route path="/anecdotes" element={<AnecdoteList anecdotes ={anecdotes}/>} />
