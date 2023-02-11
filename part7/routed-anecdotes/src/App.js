@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link, useParams
+  Routes, Route, Link, useParams, useNavigate
 } from 'react-router-dom'
 
 const About = () => (
@@ -99,6 +99,7 @@ const App = () => {
     const [content, setContent] = useState('')
     const [author, setAuthor] = useState('')
     const [info, setInfo] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
       e.preventDefault()
@@ -108,6 +109,7 @@ const App = () => {
         info,
         votes: 0
       })
+      navigate('/anecdotes')
     }
 
     return (
