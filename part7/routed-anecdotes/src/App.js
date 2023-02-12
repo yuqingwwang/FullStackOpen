@@ -135,10 +135,11 @@ const App = () => {
       navigate('/anecdotes')
     }
 
+
     return (
       <div>
         <h2>create a new anecdote</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div>
             content
             <input {...content} />
@@ -151,7 +152,8 @@ const App = () => {
             url for more info
             <input {...info} />
           </div>
-          <button>create</button>
+          <button onClick={handleSubmit}>create</button>
+          <button onClick={useField.reset}>reset</button>
         </form>
       </div>
     )
