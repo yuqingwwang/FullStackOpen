@@ -69,7 +69,6 @@ const App = () => {
       id: 2
     }
   ])
-
   const [notification, setNotification] = useState('')
 
   useEffect(() => {
@@ -118,9 +117,9 @@ const App = () => {
   )
 
   const CreateNew = (props) => {
-    const content = useField('content')
-    const author = useField('author')
-    const info = useField('info')
+    const [content, resetContent] = useField('content')
+    const [author, resetAuthor] = useField('author')
+    const [info, resetInfo] = useField('info')
 
     const navigate = useNavigate()
 
@@ -135,6 +134,11 @@ const App = () => {
       navigate('/anecdotes')
     }
 
+    const resetForm = () => {
+      resetContent()
+      resetAuthor()
+      resetInfo()
+    }
 
     return (
       <div>
@@ -153,7 +157,7 @@ const App = () => {
             <input {...info} />
           </div>
           <button onClick={handleSubmit}>create</button>
-          <button onClick={useField.reset}>reset</button>
+          <button onClick={resetForm}>reset</button>
         </form>
       </div>
     )
