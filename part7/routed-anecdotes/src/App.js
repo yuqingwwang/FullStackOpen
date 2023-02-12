@@ -1,24 +1,10 @@
-// import  { useField } from './hooks/index'
+import  { useField } from './hooks/index'
 
 import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate
 } from 'react-router-dom'
-
-const useField = (name) => {
-  const [value, setValue] = useState('')
-
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  return {
-    name,
-    value,
-    onChange
-  }
-}
 
 const About = () => (
   <div>
