@@ -88,11 +88,10 @@ const App = () => {
     const toLike = blogs.find((b) => b.id === id)
     const liked = {
       ...toLike,
-      likes: (toLike.likes || 0) + 1,
       user: toLike.user.id,
     }
 
-    blogService.update(liked.id, liked).then((updatedBlog) => {
+    blogService.like(liked).then((updatedBlog) => {
       notify(`you liked '${updatedBlog.title}' by ${updatedBlog.author}`)
       const updatedBlogs = blogs
         .map((b) => (b.id === id ? updatedBlog : b))
