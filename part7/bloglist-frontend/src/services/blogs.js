@@ -1,18 +1,21 @@
 import axios from 'axios'
+import userService from './user'
 const baseUrl = '/api/blogs'
 
-let token = null
-
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`
-}
+// let token = null
 
 const config = () => {
   return {
     headers: {
-      Authorization: token },
+      Authorization: `bearer ${userService.getToken()}`,
+    },
   }
 }
+
+// const setToken = (newToken) => {
+//   token = `bearer ${newToken}`
+// }
+
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
@@ -31,14 +34,11 @@ const create = async (newObject) => {
 // }
 
 const like = async (blog) => {
-  const config = {
-    headers: { Authorization: token },
-  }
 
   const response = await axios.put(
     `${baseUrl}/${blog.id}`,
     { ...blog, likes: blog.likes + 1 },
-    config,
+    config(),
   )
   return response.data
 }
@@ -48,4 +48,4 @@ const remove = async (id) => {
   return response.data
 }
 
-export default { getAll, create, like, remove, setToken }
+export default { getAll, create, like, remove }
