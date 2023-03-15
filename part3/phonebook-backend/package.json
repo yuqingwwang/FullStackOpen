@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yuqingwang98/phonebook-backend.git"
+    "url": "git+https://github.com/yuqingwwang/phonebook-backend.git"
   },
   "author": "Yuqing",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yuqingwang98/phonebook-backend/issues"
+    "url": "https://github.com/yuqingwwang/phonebook-backend/issues"
   },
-  "homepage": "https://github.com/yuqingwang98/phonebook-backend#readme",
+  "homepage": "https://github.com/yuqingwwang/phonebook-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
