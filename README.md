@@ -9,4 +9,5 @@ A course on JavaScript-based web development
 - Part 4 (Jan 19) <br>
 - Part 5 (Jan 29) <br>
 - Part 6 (Feb 10) <br>
-- Part 7
+- Part 7 (March 15) <br>
+- Part 8
