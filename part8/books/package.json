@@ -2,5 +2,15 @@
   "dependencies": {
     "@apollo/server": "^4.5.0",
     "graphql": "^16.6.0"
-  }
+  },
+  "name": "books",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
