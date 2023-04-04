@@ -1,5 +1,8 @@
 # FullStackOpen
-A course on JavaScript-based web development
+My solutions to Full Stack Open 2022, a course on JavaScript-based web development
+
+## Certificate
+![certificate-fullstack](https://user-images.githubusercontent.com/44486576/229929290-9ff381f1-5395-4ce2-bfe2-3c7f0bc59af8.png)
 
 ## Progress
 - Part 0 (Dec 29) <br>
