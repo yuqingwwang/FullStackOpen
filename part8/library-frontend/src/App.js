@@ -26,17 +26,18 @@ const ALL_AUTHORS = gql`
   }
 `
 
-const FIND_BOOK = gql`
-  query findBookByName($titleToSearch: String!) {
-    findBook(name: $titleToSearch) {
-      title,
-      published,
-      author
-      id
-      genres
-    }
-  }
-`
+// const FIND_BOOK = gql`
+//   query findBookByName($titleToSearch: String!) {
+//     findBook(name: $titleToSearch) {
+//       title,
+//       published,
+//       author
+//       id
+//       genres
+//     }
+//   }
+// `
+
 const App = () => {
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
