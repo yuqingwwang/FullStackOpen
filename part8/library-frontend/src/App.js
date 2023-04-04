@@ -1,50 +1,38 @@
 import { useState } from 'react'
+import { useQuery } from '@apollo/client'
+
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
-import { gql, useQuery } from '@apollo/client'
 
-const ALL_BOOKS = gql`
-  query {
-    allBooks  {
-      title,
-      published,
-      author
-      id
-      genres
-    }
+import { ALL_BOOKS, ALL_AUTHORS  } from './queries'
+
+const Notify = ({errorMessage}) => {
+  if ( !errorMessage ) {
+    return null
   }
-  `
-
-const ALL_AUTHORS = gql`
-  query {
-    allAuthors  {
-      name,
-      born,
-      bookCount
-    }
-  }
-`
-
-// const FIND_BOOK = gql`
-//   query findBookByName($titleToSearch: String!) {
-//     findBook(name: $titleToSearch) {
-//       title,
-//       published,
-//       author
-//       id
-//       genres
-//     }
-//   }
-// `
+  return (
+    <div style={{color: 'red'}}>
+    {errorMessage}
+    </div>
+  )
+}
 
 const App = () => {
+  const [errorMessage, setErrorMessage] = useState(null)
   const [page, setPage] = useState('authors')
-  const authors = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
+  const authors = useQuery(ALL_AUTHORS, {pollInterval: 2000})
+  const books = useQuery(ALL_BOOKS, {pollInterval: 2000})
 
-  if (authors.loading) {
+  if (books.loading || authors.loading){
     return <div>loading...</div>
+  }
+
+  const notify = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
   }
 
   return (
@@ -54,12 +42,13 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
       </div>
+      <Notify errorMessage={errorMessage} />
 
       <Authors show={page === 'authors'} authors={authors.data.allAuthors}/>
 
       <Books show={page === 'books'} books={books.data.allBooks}/>
 
-      <NewBook show={page === 'add'} />
+      <NewBook show={page === 'add'} setError={notify}/>
     </div>
   )
 }

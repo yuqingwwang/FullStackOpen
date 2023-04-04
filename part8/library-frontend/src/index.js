@@ -1,12 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client'
 import App from './App'
 import {
   ApolloClient,
   ApolloProvider,
-  InMemoryCache,
-  gql
+  InMemoryCache
 } from '@apollo/client'
 
 const client = new ApolloClient({
@@ -14,33 +11,25 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-const query = gql`
-  query {
-    allBooks  {
-      title,
-      published,
-      author
-      id
-      genres
-    }
-  }
-`
+// const query = gql`
+//   query {
+//     allBooks  {
+//       title,
+//       published,
+//       author
+//       id
+//       genres
+//     }
+//   }
+// `
 
-client.query({ query })
-  .then((response) => {
-    console.log(response.data)
-  })
+// client.query({ query })
+//   .then((response) => {
+//     console.log(response.data)
+//   })
 
-const root = createRoot(document.getElementById('root'));
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <ApolloProvider client={client}>
     <App />
-  </ApolloProvider>,
-);
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <ApolloProvider client={client}>
-//     <App />
-//   </ApolloProvider>
-// )
+  </ApolloProvider>
+)
