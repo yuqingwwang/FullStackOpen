@@ -1,28 +1,49 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation , useQuery } from "@apollo/client";
+
 import { ALL_AUTHORS, EDIT_BIRTHYEAR } from "../queries";
 
-const Authors = (props) => {
+const Authors = ({show, setError }) => {
   const [name, setName] = useState("");
   const [born, setBornYear] = useState("");
 
   const [editAuthor] = useMutation(EDIT_BIRTHYEAR, {
-    refetchQueries: [{ query: ALL_AUTHORS }],
-  });
+    onError: (error) => {
+      if (error.graphQLErrors) {
+      const errors = error.graphQLErrors[0]
+        if (errors){
+          setError(errors.message)
+        }
+      }
+    }
+  })
 
-  if (!props.show) {
+  const { loading, error, data } = useQuery(ALL_AUTHORS, { pollInterval: 2000 });
+
+  if (!show) {
     return null
   }
 
   const submit = async (event) => {
     event.preventDefault();
 
-    editAuthor({ variables: { name, born } });
+    await editAuthor({ variables: { name, born } });
 
     setName("");
     setBornYear("");
+
   };
-  const authors = props.authors
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const authors = data.allAuthors;
+
 
   return (
     <div>
@@ -46,26 +67,27 @@ const Authors = (props) => {
       <h3>Set birthyear</h3>
       <form onSubmit={submit}>
         <div>
-          name
-          <select>
-            {authors.map((a) => (
-              <option key={a.name} value={a.name}>
-                {a.name}
-              </option>
-            ))}
+          <select onChange={({ target }) => setName(target.value)}>
+          <option value="">
+          --- select an author ---
+          </option>
+          {authors.map((a) =>
+            <option key={a.name} value={a.name}>
+              {a.name}
+            </option>
+          )}
           </select>
         </div>
         <div>
           born
           <input
-            ype="number"
+            type="number"
             value={born}
             onChange={({ target }) => setBornYear(parseInt(target.value))}
           />
         </div>
         <button type="submit">update author</button>
       </form>
-
     </div>
   )
 }
