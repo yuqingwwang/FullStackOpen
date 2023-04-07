@@ -44,7 +44,7 @@ const App = () => {
       </div>
       <Notify errorMessage={errorMessage} />
 
-      <Authors show={page === 'authors'} setError={notify}/>
+      <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>
 
       <Books show={page === 'books'} books={books.data.allBooks}/>
 

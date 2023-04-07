@@ -1,48 +1,35 @@
 import { useState } from "react";
-import { useMutation , useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { ALL_AUTHORS, EDIT_BIRTHYEAR } from "../queries";
+import { EDIT_BIRTHYEAR } from "../queries";
 
-const Authors = ({show, setError }) => {
+const Authors = ({show, authors, setError }) => {
   const [name, setName] = useState("");
-  const [born, setBornYear] = useState("");
+  const [setBornTo, setBornYear] = useState(1990);
 
   const [editAuthor] = useMutation(EDIT_BIRTHYEAR, {
     onError: (error) => {
       if (error.graphQLErrors) {
       const errors = error.graphQLErrors[0]
-        if (errors){
-          setError(errors.message)
-        }
+      setError(errors.message)
       }
     }
   })
 
-  const { loading, error, data } = useQuery(ALL_AUTHORS, { pollInterval: 2000 });
+  const submit = async (event) => {
+    event.preventDefault();
+
+    editAuthor({ variables: { name, setBornTo } });
+
+    setName("");
+    setBornYear("")
+
+  };
+
 
   if (!show) {
     return null
   }
-
-  const submit = async (event) => {
-    event.preventDefault();
-
-    await editAuthor({ variables: { name, born } });
-
-    setName("");
-    setBornYear("");
-
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const authors = data.allAuthors;
 
 
   return (
@@ -81,8 +68,7 @@ const Authors = ({show, setError }) => {
         <div>
           born
           <input
-            type="number"
-            value={born}
+            value={setBornTo}
             onChange={({ target }) => setBornYear(parseInt(target.value))}
           />
         </div>
