@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { EDIT_BIRTHYEAR } from "../queries";
 
-const Authors = ({show, authors, setError }) => {
+const Authors = (props) => {
   const [name, setName] = useState("");
   const [setBornTo, setBornYear] = useState(1990);
 
@@ -11,10 +11,14 @@ const Authors = ({show, authors, setError }) => {
     onError: (error) => {
       if (error.graphQLErrors) {
       const errors = error.graphQLErrors[0]
-      setError(errors.message)
+      props.setError(errors.message)
       }
     }
   })
+  let authors = []
+  if (props.data) {
+    authors = props.data.allAuthors
+  }
 
   const submit = async (event) => {
     event.preventDefault();
@@ -27,7 +31,7 @@ const Authors = ({show, authors, setError }) => {
   };
 
 
-  if (!show) {
+  if (!props.show) {
     return null
   }
 

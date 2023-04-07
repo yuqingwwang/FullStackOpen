@@ -3,7 +3,10 @@ const Books = (props) => {
     return null
   }
 
-  const books = props.books
+  let books = []
+
+  if (props.data)
+    {books = props.data.allBooks.books}
 
   return (
     <div>

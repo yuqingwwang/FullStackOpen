@@ -24,6 +24,9 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS, {pollInterval: 2000})
   const books = useQuery(ALL_BOOKS, {pollInterval: 2000})
 
+  console.log(authors)
+  console.log(books)
+
   if (books.loading || authors.loading){
     return <div>loading...</div>
   }
@@ -44,9 +47,9 @@ const App = () => {
       </div>
       <Notify errorMessage={errorMessage} />
 
-      <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>
+      <Authors show={page === 'authors'} authors={authors} setError={notify}/>
 
-      <Books show={page === 'books'} books={books.data.allBooks}/>
+      <Books show={page === 'books'} books={books}/>
 
       <NewBook show={page === 'add'} setError={notify}/>
     </div>
