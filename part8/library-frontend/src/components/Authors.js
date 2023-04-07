@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { EDIT_BIRTHYEAR } from "../queries";
 
-const Authors = ({show, authors, setError }) => {
+const Authors = ({show, authors, setError}) => {
   const [name, setName] = useState("");
   const [setBornTo, setBornYear] = useState(1990);
 
