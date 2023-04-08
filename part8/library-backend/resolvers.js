@@ -6,7 +6,23 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      const books = await Book.find({})
+      const query = {};
+
+      if (args.author) {
+        const author = await Author.findOne({ name: args.author });
+
+        if (!author){
+          return []
+        }
+        query.author = author._id;
+      }
+      if (args.genre === "all genres") args.genre = null;
+
+      if (args.genre) {
+        query.genres = { $in: [args.genre] };
+      }
+
+      const books = await Book.find(query).populate("author")
       return books;
     },
     allAuthors: async (root, args) => {
