@@ -1,6 +1,8 @@
 const Book = require("./models/book");
 const Author = require("./models/author");
 const User = require("./models/user");
+const jwt = require("jsonwebtoken");
+
 
 const { GraphQLError } = require("graphql");
 
@@ -38,7 +40,17 @@ const resolvers = {
     }
   },
   Mutation: {
-    addBook: async (root, args) => {
+    addBook: async (root, args, context) => {
+      const currentUser = context.currentUser;
+
+      if (!currentUser) {
+        throw new GraphQLError("not authenticated", {
+          extensions: {
+            code: "BAD_USER_INPUT"
+          }
+        });
+      }
+
       let foundAuthor = await Author.findOne({ name: args.author });
       foundAuthor = foundAuthor
         ? foundAuthor
@@ -60,7 +72,17 @@ const resolvers = {
 
       return book
     },
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, context) => {
+      const currentUser = context.currentUser;
+
+      if (!currentUser) {
+        throw new GraphQLError("not authenticated", {
+          extensions: {
+            code: "BAD_USER_INPUT"
+          }
+        });
+      }
+      
       const author = await Author.findOne({ name: args.name });
       author.born = args.setBornTo;
       try {
