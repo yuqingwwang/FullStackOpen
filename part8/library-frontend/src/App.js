@@ -4,8 +4,10 @@ import { useQuery } from '@apollo/client'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import LoginForm from './components/LoginForm'
 
 import { ALL_BOOKS, ALL_AUTHORS  } from './queries'
+import { useApolloClient } from '@apollo/client';
 
 const Notify = ({errorMessage}) => {
   if ( !errorMessage ) {
@@ -19,13 +21,23 @@ const Notify = ({errorMessage}) => {
 }
 
 const App = () => {
+  const [token, setToken] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [page, setPage] = useState('authors')
-  const authors = useQuery(ALL_AUTHORS, {pollInterval: 2000})
-  const books = useQuery(ALL_BOOKS, {pollInterval: 2000})
+  const authors = useQuery(ALL_AUTHORS)
+  const books = useQuery(ALL_BOOKS)
+  const client = useApolloClient()
+  console.log(authors)
+  console.log(books)
 
   if (books.loading || authors.loading){
     return <div>loading...</div>
+  }
+
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
   }
 
   const notify = (message) => {
@@ -34,6 +46,19 @@ const App = () => {
       setErrorMessage(null)
     }, 10000)
   }
+
+  // if (!token) {
+  //   return (
+  //     <div>
+  //       <Notify errorMessage={errorMessage} />
+  //       <h2>Login</h2>
+  //       <LoginForm
+  //         setToken={setToken}
+  //         setError={notify}
+  //       />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div>
@@ -44,9 +69,11 @@ const App = () => {
       </div>
       <Notify errorMessage={errorMessage} />
 
-      <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>
+      <button onClick={logout}>logout</button>
 
-      <Books show={page === 'books'} books={books.data.allBooks}/>
+      {authors.data && <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>}
+
+      {books.data && <Books show={page === 'books'} books={books.data.allBooks}/>}
 
       <NewBook show={page === 'add'} setError={notify}/>
     </div>
