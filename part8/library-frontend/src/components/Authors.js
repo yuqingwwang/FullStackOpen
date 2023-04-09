@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { EDIT_BIRTHYEAR } from "../queries";
+import { ALL_AUTHORS , EDIT_BIRTHYEAR } from "../queries";
 
 const Authors = ({show, authors, setError}) => {
   const [name, setName] = useState("");
@@ -11,10 +11,16 @@ const Authors = ({show, authors, setError}) => {
     onError: (error) => {
       if (error.graphQLErrors) {
       const errors = error.graphQLErrors[0]
-      setError(errors.message)
+      setError(errors)
       }
-    }
-  })
+    },
+    update: (cache, response) => {
+      cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors})=>{
+        return {
+          allAuthors: allAuthors.concat(response.data.editAuthor),
+        }
+      })
+    }})
 
   const submit = async (event) => {
     event.preventDefault();

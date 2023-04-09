@@ -27,8 +27,6 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
   const client = useApolloClient()
-  console.log(authors)
-  console.log(books)
 
   if (books.loading || authors.loading){
     return <div>loading...</div>
@@ -47,18 +45,18 @@ const App = () => {
     }, 10000)
   }
 
-  // if (!token) {
-  //   return (
-  //     <div>
-  //       <Notify errorMessage={errorMessage} />
-  //       <h2>Login</h2>
-  //       <LoginForm
-  //         setToken={setToken}
-  //         setError={notify}
-  //       />
-  //     </div>
-  //   )
-  // }
+  if (!token) {
+    return (
+      <div>
+        <Notify errorMessage={errorMessage} />
+        <h2>Login</h2>
+        <LoginForm
+          setToken={setToken}
+          setError={notify}
+        />
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -71,9 +69,9 @@ const App = () => {
 
       <button onClick={logout}>logout</button>
 
-      {authors.data && <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>}
+      <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>
 
-      {books.data && <Books show={page === 'books'} books={books.data.allBooks}/>}
+      <Books show={page === 'books'} books={books.data.allBooks}/>
 
       <NewBook show={page === 'add'} setError={notify}/>
     </div>
