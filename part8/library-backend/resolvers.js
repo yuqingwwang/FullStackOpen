@@ -42,7 +42,6 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args, context) => {
       const currentUser = context.currentUser;
-
       if (!currentUser) {
         throw new GraphQLError("not authenticated", {
           extensions: {
@@ -82,7 +81,7 @@ const resolvers = {
           }
         });
       }
-      
+
       const author = await Author.findOne({ name: args.name });
       author.born = args.setBornTo;
       try {

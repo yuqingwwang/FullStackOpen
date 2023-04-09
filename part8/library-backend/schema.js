@@ -37,7 +37,7 @@ const typeDefs = `
     ): Author,
     createUser(
       username: String!
-      favoriteGenre: String!
+      favoriteGenre: String
     ): User,
     login(
       username: String!
