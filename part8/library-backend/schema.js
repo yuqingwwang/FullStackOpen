@@ -27,7 +27,7 @@ const typeDefs = `
   type Mutation {
     addBook(
       title: String!
-      author: String!
+      authorname: String!
       published: Int!
       genres: [String!]
     ): Book,

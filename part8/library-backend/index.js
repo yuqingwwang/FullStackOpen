@@ -2,6 +2,8 @@ const { ApolloServer } = require('@apollo/server')
 const { startStandaloneServer } = require('@apollo/server/standalone')
 
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const User = require("./models/user");
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -36,7 +38,7 @@ startStandaloneServer(server, {
         auth.substring(7), process.env.JWT_SECRET
       )
       const currentUser = await User
-        .findById(decodedToken.id).populate('friends')
+        .findById(decodedToken.id)
       return { currentUser }
     }
   },

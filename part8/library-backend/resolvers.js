@@ -10,7 +10,7 @@ const { GraphQLError } = require("graphql");
 const resolvers = {
   Query: {
     bookCount: async () => Book.collection.countDocuments(),
-    authorCount: async () => Author.collection.countDocuments(),
+    authorCount: async() => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
       const query = {};
 
