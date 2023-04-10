@@ -3,12 +3,13 @@ const typeDefs = `
     name: String!
     id: ID!
     born: Int
+    bookList: [Book!]
     bookCount: Int
   }
 
   type Book {
     title: String!
-    published: Int
+    published: Int!
     author: Author!
     id: ID!
     genres: [String]
@@ -51,6 +52,12 @@ const typeDefs = `
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
     me: User
+    allGenres: [String!]!
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }    
 `
+
 module.exports = typeDefs

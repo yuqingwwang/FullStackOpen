@@ -14,13 +14,34 @@ const Authors = ({show, authors, setError}) => {
       setError(errors)
       }
     },
+    // update: (cache, response) => {
+    //   cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors})=>{
+    //     return {
+    //       allAuthors: allAuthors.concat(response.data.editAuthor),
+    //     }
+    //   })
+    // }
     update: (cache, response) => {
-      cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors})=>{
-        return {
-          allAuthors: allAuthors.concat(response.data.editAuthor),
+      const editedAuthor = response.data.editAuthor;
+      const dataInCache = cache.readQuery({ query: ALL_AUTHORS });
+      const authorsInCache = dataInCache.allAuthors;
+
+      const updatedAuthors = authorsInCache.map(author => {
+        if (author.name === editedAuthor.name) {
+          return { ...author, born: editedAuthor.born };
+        } else {
+          return author;
         }
-      })
-    }})
+      });
+
+      cache.writeQuery({
+        query: ALL_AUTHORS,
+        data: {
+          allAuthors: updatedAuthors
+        }
+      });
+    }
+  })
 
   const submit = async (event) => {
     event.preventDefault();
