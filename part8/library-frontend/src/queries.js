@@ -79,6 +79,16 @@ export const LOGIN = gql`
     }
   }
 `
+
+export const CURRENT_USER = gql`
+  query {
+    me {
+      username
+      favoriteGenre
+    }
+  }
+`;
+
 export const FAVORITE_GENRE = gql`
   query {
     me {

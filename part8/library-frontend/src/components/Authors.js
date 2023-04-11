@@ -46,7 +46,6 @@ const Authors = ({show, authors, setError}) => {
 
   };
 
-
   if (!show) {
     return null
   }

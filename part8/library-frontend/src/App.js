@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
+import FavouriteBooks from './components/Recommendation'
 
-import { ALL_BOOKS, ALL_AUTHORS  } from './queries'
+import { ALL_BOOKS, ALL_AUTHORS, CURRENT_USER } from './queries'
 import { useApolloClient } from '@apollo/client';
 
 const Notify = ({errorMessage}) => {
@@ -27,6 +28,8 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
   const client = useApolloClient()
+
+  const { loading: meLoading, data: meData } = useQuery(CURRENT_USER)
 
   if (books.loading || authors.loading){
     return <div>loading...</div>
@@ -63,6 +66,7 @@ const App = () => {
       <div>
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
+        <button onClick={() => setPage('recommendation')}>recommendation</button>
         <button onClick={() => setPage('add')}>add book</button>
       </div>
       <Notify errorMessage={errorMessage} />
@@ -72,6 +76,8 @@ const App = () => {
       <Authors show={page === 'authors'} authors={authors.data.allAuthors} setError={notify}/>
 
       <Books show={page === 'books'} />
+
+      <FavouriteBooks show={page === 'recommendation'} user={meData.me}/>
 
       <NewBook show={page === 'add'} setError={notify}/>
     </div>
