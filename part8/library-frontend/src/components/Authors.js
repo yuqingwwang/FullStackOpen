@@ -14,13 +14,6 @@ const Authors = ({show, authors, setError}) => {
       setError(errors)
       }
     },
-    // update: (cache, response) => {
-    //   cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors})=>{
-    //     return {
-    //       allAuthors: allAuthors.concat(response.data.editAuthor),
-    //     }
-    //   })
-    // }
     update: (cache, response) => {
       const editedAuthor = response.data.editAuthor;
       const dataInCache = cache.readQuery({ query: ALL_AUTHORS });
