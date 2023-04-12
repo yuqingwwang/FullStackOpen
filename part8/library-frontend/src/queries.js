@@ -25,18 +25,6 @@ query {
 }
 `
 
-// export const FIND_BOOK = gql`
-//   query findBookByName($titleToSearch: String!) {
-//     findBook(name: $titleToSearch) {
-//       title,
-//       published,
-//       author
-//       id
-//       genres
-//     }
-//   }
-// `
-
 export const CREATE_BOOK = gql`
   mutation createBook(
     $title: String!
@@ -101,4 +89,18 @@ export const ALL_GENRES = gql`
 query {
   allGenres
 }
+`
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      published
+      author {
+        name
+      }
+      genres
+      id
+    }
+  }
 `

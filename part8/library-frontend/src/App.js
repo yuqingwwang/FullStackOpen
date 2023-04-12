@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
+import { useState } from 'react'
+import { useQuery, useSubscription } from '@apollo/client'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -7,7 +7,7 @@ import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import FavouriteBooks from './components/Recommendation'
 
-import { ALL_BOOKS, ALL_AUTHORS, CURRENT_USER } from './queries'
+import { ALL_BOOKS, ALL_AUTHORS, CURRENT_USER, BOOK_ADDED } from './queries'
 import { useApolloClient } from '@apollo/client';
 
 const Notify = ({errorMessage}) => {
@@ -21,6 +21,24 @@ const Notify = ({errorMessage}) => {
   )
 }
 
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {
+  // helper that is used to eliminate saving same person twice
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.name
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allPersons: uniqByName(allBooks.concat(addedBook)),
+    }
+  })
+}
+
 const App = () => {
   const [token, setToken] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -30,6 +48,17 @@ const App = () => {
   const client = useApolloClient()
 
   const { loading: meLoading, data: meData } = useQuery(CURRENT_USER)
+
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data, client }) => {
+      const addedBook = data.data.bookAdded
+      console.log(addedBook)
+      notify(`New book added: ${addedBook.title} by ${addedBook.author.name}`)
+
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
+      },
+    })
 
   if (books.loading || authors.loading){
     return <div>loading...</div>
@@ -60,6 +89,7 @@ const App = () => {
       </div>
     )
   }
+
 
   return (
     <div>
