@@ -38,4 +38,7 @@ const calculateExercises = (hours: Array<number>, target: number): Result => {
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+const hours = process.argv.slice(3).map((h) => Number(h));
+const target = Number(process.argv[2]);
+
+console.log(calculateExercises(hours, target));
