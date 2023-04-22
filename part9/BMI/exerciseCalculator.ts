@@ -38,6 +38,7 @@ const calculateExercises = (hours: Array<number>, target: number): Result => {
   };
 };
 
+//slicing the args to get the third element and onwards
 const hours = process.argv.slice(3).map((h) => Number(h));
 const target = Number(process.argv[2]);
 
