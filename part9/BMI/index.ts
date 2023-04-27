@@ -1,6 +1,6 @@
 import express from 'express';
 import  calculateBmi  from './bmiCalculator';
-// import calculateExercises from './exerciseCalculator';
+import calculateExercises from './exerciseCalculator';
 const app = express();
 
 app.get('/hello', (_req, res) => {
@@ -15,7 +15,7 @@ app.get('/bmi', (req, res) => {
   }
   if (height <= 0 || weight <= 0) {
     return res.status(400).json({ error: 'invalid input' });
-  };
+  }
 
   const bmi = calculateBmi(height, weight);
   res.json({
@@ -26,6 +26,22 @@ app.get('/bmi', (req, res) => {
   return;
 });
 
+app.post('/exercises', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { daily_exercises, target } = req.body;
+  if (!daily_exercises || !target) {
+    return res.status(400).json({ error: 'parameters missing' });
+  }
+  if (!Array.isArray(daily_exercises) || isNaN(Number(target))) {
+    return res.status(400).json({ error: 'malformatted parameters' });
+  }
+  const hours = daily_exercises.map((h: number) => Number(h));
+  const t = Number(target);
+  const result = calculateExercises(hours, t);
+  res.send({ result });
+  // res.json(result);
+  return;
+});
 
 const PORT = 3003;
 

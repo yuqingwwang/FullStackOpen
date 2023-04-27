@@ -44,4 +44,4 @@ const target = Number(process.argv[2]);
 
 console.log(calculateExercises(hours, target));
 
-export default calculateExercises
+export default calculateExercises;
