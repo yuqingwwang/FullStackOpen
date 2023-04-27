@@ -2,6 +2,7 @@ import express from 'express';
 import  calculateBmi  from './bmiCalculator';
 import calculateExercises from './exerciseCalculator';
 const app = express();
+app.use(express.json())
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
@@ -27,20 +28,27 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/exercises', (req, res) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { daily_exercises, target } = req.body;
-  if (!daily_exercises || !target) {
-    return res.status(400).json({ error: 'parameters missing' });
+  console.log(req.body)
+  const dailyExercises = req.body.daily_exercises;
+  const dailyTarget = req.body.target;
+
+  if (!dailyExercises || !dailyTarget) {
+    return res.status(400).json({ error: 'Missing parameter daily_exercises or target' });
   }
-  if (!Array.isArray(daily_exercises) || isNaN(Number(target))) {
-    return res.status(400).json({ error: 'malformatted parameters' });
+
+  const parsedTarget = Number(dailyTarget);
+  if (isNaN(parsedTarget)) {
+    return res.status(400).json({ error: 'Invalid target value' });
   }
-  const hours = daily_exercises.map((h: number) => Number(h));
-  const t = Number(target);
-  const result = calculateExercises(hours, t);
-  res.send({ result });
-  // res.json(result);
-  return;
+
+  const parsedHours = dailyExercises.map(Number);
+  if (parsedHours.some(isNaN)) {
+    return res.status(400).json({ error: 'Invalid daily exercise values' });
+  }
+
+  const result = calculateExercises(parsedHours, parsedTarget);
+  res.json(result);
+  return
 });
 
 const PORT = 3003;

@@ -11,7 +11,7 @@ interface Result {
 const calculateExercises = (hours: Array<number>, target: number): Result => {
   const periodLength: number = hours.length;
   const trainingDays: number = hours.filter((h: number) => h > 0).length;
-  const totalHours: number = hours.reduce((a: number, b: number) => a + b);
+  const totalHours: number = hours.reduce((a: number, b: number) => a + b, 0);
   const average: number = totalHours / periodLength;
   const success: boolean = average >= target;
   const ratio: number = average / target;
