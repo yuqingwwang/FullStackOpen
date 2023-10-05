@@ -1,4 +1,7 @@
 # FullStackOpen
+
+[![wakatime](https://wakatime.com/badge/user/2e05c44e-9e20-41d5-9b3b-28547069bb23/project/62ee2ef3-2df6-4927-ba80-a090356954a4.svg)](https://wakatime.com/badge/user/2e05c44e-9e20-41d5-9b3b-28547069bb23/project/62ee2ef3-2df6-4927-ba80-a090356954a4)
+
 My solutions to Full Stack Open 2022, a course on JavaScript-based web development
 
 ## Certificates
