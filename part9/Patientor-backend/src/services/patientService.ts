@@ -34,8 +34,7 @@ const findById = (id: string): Patient | undefined => {
   const entry = patients.find(p => p.id === id);
   if (!entry) return undefined;
   return {
-    ...entry,
-    entries: []
+    ...entry
   };
 };
 
