@@ -9,7 +9,16 @@ const addDiary = () => {
   return null;
 };
 
+const findById = (id: string): DiagnosisEntry | undefined => {
+  const entry = diagnoses.find(p => p.code === id);
+  if (!entry) return undefined;
+  return {
+    ...entry
+  };
+};
+
 export default {
   getEntries,
-  addDiary
+  addDiary,
+  findById
 };
