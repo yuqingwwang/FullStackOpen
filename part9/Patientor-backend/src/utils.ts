@@ -1,4 +1,4 @@
-import { NewPatientEntry, Gender} from "./types";
+import { NewPatientEntry, Gender, NewDiagnosisEntry} from "./types";
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
 };
@@ -48,7 +48,7 @@ const parseOccupation = (occupation: unknown): string => {
 };
 
 
-const toNewPatientEntry = (object: unknown) : NewPatientEntry => {
+export const toNewPatientEntry = (object: unknown) : NewPatientEntry => {
   if(!object || typeof object !== 'object'){
     throw new Error('Incorrect or missing object: ' + object);
   }
@@ -67,4 +67,18 @@ const toNewPatientEntry = (object: unknown) : NewPatientEntry => {
   throw new Error('Incorrect or missing object: ' + object);
 };
 
-export default toNewPatientEntry;
+export const toNewDiagnosisEntry = (object: unknown): NewDiagnosisEntry => {
+  if(!object || typeof object !== 'object'){
+    throw new Error('Incorrect or missing object: ' + object);
+  }
+
+  if('name' in object && 'latin' in object){
+    const newDiagnosisEntry: NewDiagnosisEntry = {
+      name: parseName(object.name),
+      latin: parseName(object.latin)
+    };
+
+    return newDiagnosisEntry;
+  }
+  throw new Error('Incorrect or missing object: ' + object);
+};

@@ -1,5 +1,5 @@
 import diagnoses from '../../data/diagnoses';
-import { DiagnosisEntry } from '../types';
+import { DiagnosisEntry, NewDiagnosisEntry } from '../types';
 
 const getEntries = (): DiagnosisEntry[] => {
   return diagnoses;
@@ -17,8 +17,18 @@ const findById = (id: string): DiagnosisEntry | undefined => {
   };
 };
 
+const addEntry = (entry: NewDiagnosisEntry): DiagnosisEntry => {
+  const newDiaryEntry = {
+    code: Math.random().toString(36).slice(2),
+    ...entry
+  };
+  diagnoses.push(newDiaryEntry);
+  return newDiaryEntry;
+};
+
 export default {
   getEntries,
   addDiary,
-  findById
+  findById,
+  addEntry
 };

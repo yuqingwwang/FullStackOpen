@@ -1,37 +1,30 @@
-export interface DiagnosisEntry {
+export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
 }
 
 export enum Gender {
-  male = "male",
-  female = "female",
-  other = "other"
+  Male = "male",
+  Female = "female",
+  Other = "other"
 }
 
-
-export interface PatientEntry {
-  id: string;
-  name: string;
-  dateOfBirth: string;
-  ssn: string;
-  gender: Gender;
-  occupation: string;
-}
-
-export type NonSensitivePatientEntry = Omit<PatientEntry, 'ssn'>;
-
-export type NewPatientEntry = Omit<PatientEntry, 'id'>;
-
-export type NewDiagnosisEntry = Omit<DiagnosisEntry, 'code'>;
+// export interface Patient {
+//   id: string;
+//   name: string;
+//   occupation: string;
+//   gender: Gender;
+//   ssn?: string;
+//   dateOfBirth?: string;
+// }
 
 interface BaseEntry {
   id: string;
   description: string;
   date: string;
   specialist: string;
-  diagnosisCodes?: Array<DiagnosisEntry['code']>;
+  diagnosisCodes?: Array<Diagnosis['code']>;
   sickLeave?: {
     startDate: string,
     endDate: string,
@@ -71,11 +64,11 @@ export type Entry =
 export interface Patient {
   id: string;
   name: string;
-  ssn: string;
+  ssn?: string;
   occupation: string;
   gender: Gender;
-  dateOfBirth: string;
+  dateOfBirth?: string;
   entries: Entry[]
 }
 
-export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
+export type PatientFormValues = Omit<Patient, "id" | "entries">;

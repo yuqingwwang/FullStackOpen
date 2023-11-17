@@ -1,5 +1,6 @@
 import express from 'express';
 import diagnosisService from '../services/diagnosisService';
+import { toNewDiagnosisEntry } from '../utils';
 
 const router = express.Router();
 
@@ -19,5 +20,12 @@ router.get('/:id', (_req, res) => {
     res.sendStatus(404);
   }
 });
+
+router.post('/:id/entries', (_req, res) => {
+  const newDiagnosisEntry = toNewDiagnosisEntry(_req.body);
+  const addedEntry = diagnosisService.addEntry(newDiagnosisEntry);
+  res.json(addedEntry);
+}
+);
 
 export default router;
